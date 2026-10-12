@@ -6,7 +6,7 @@ class DioClient {
   DioClient()
     : _dio = Dio(
         BaseOptions(
-          baseUrl: "http://hungry-ecommerce.onlinewebshop.net/",
+          baseUrl: "http://hifzquran.mywebcommunity.org/",
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
