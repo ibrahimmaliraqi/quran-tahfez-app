@@ -86,7 +86,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 );
                 GoRouter.of(
                   context,
-                ).pushReplacement(AppRouter.managerDashboardView);
+                ).pushReplacement(AppRouter.managerRootView);
                 print(state.user.id);
                 print(state.user.name);
                 print(state.user.email);

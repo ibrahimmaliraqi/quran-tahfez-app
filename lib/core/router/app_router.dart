@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:quran_tahfez/features/auth/presentation/view/login_view.dart';
 import 'package:quran_tahfez/features/manager/dashboard/presentation/view/manager_dashboard_view.dart';
+import 'package:quran_tahfez/features/manager/manager_root_view.dart';
 import 'package:quran_tahfez/splash_view.dart';
 
 class AppRouter {
@@ -8,7 +9,7 @@ class AppRouter {
   static const login = '/login';
   static const managerDashboardView = '/managerDashboardView';
   // static const register = '/register';
-  // static const productView = '/productView';
+  static const managerRootView = '/managerRootView';
   // static const cartView = '/cartView';
   // static const editPrefileView = '/editPrefileView';
   // static const prefileView = '/prefileView';
@@ -25,9 +26,10 @@ class AppRouter {
         path: login,
         builder: (context, state) => LoginView(),
       ),
+
       GoRoute(
-        path: managerDashboardView,
-        builder: (context, state) => ManagerDashboardView(),
+        path: managerRootView,
+        builder: (context, state) => ManagerRootView(),
       ),
     ],
   );
