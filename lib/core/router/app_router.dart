@@ -1,11 +1,12 @@
 import 'package:go_router/go_router.dart';
 import 'package:quran_tahfez/features/auth/presentation/view/login_view.dart';
+import 'package:quran_tahfez/features/manager/dashboard/presentation/view/manager_dashboard_view.dart';
 import 'package:quran_tahfez/splash_view.dart';
 
 class AppRouter {
   static const splashView = '/';
   static const login = '/login';
-  // static const rootView = '/rootView';
+  static const managerDashboardView = '/managerDashboardView';
   // static const register = '/register';
   // static const productView = '/productView';
   // static const cartView = '/cartView';
@@ -23,6 +24,10 @@ class AppRouter {
       GoRoute(
         path: login,
         builder: (context, state) => LoginView(),
+      ),
+      GoRoute(
+        path: managerDashboardView,
+        builder: (context, state) => ManagerDashboardView(),
       ),
     ],
   );

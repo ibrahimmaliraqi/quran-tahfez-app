@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+import 'package:quran_tahfez/core/router/app_router.dart';
 import 'package:quran_tahfez/core/widgets/custom_button.dart';
 import 'package:quran_tahfez/core/widgets/custom_text_field.dart';
 import 'package:quran_tahfez/core/widgets/loading.dart';
@@ -22,6 +24,12 @@ class _LoginViewBodyState extends State<LoginViewBody> {
   final TextEditingController emailCon = TextEditingController();
   final TextEditingController passwordCon = TextEditingController();
   GlobalKey<FormState> vali = GlobalKey();
+  @override
+  void initState() {
+    emailCon.text = "ibrahim@gmail.com";
+    passwordCon.text = "07700770";
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -76,6 +84,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                   context,
                   message: "تم تسجيل الدخول بنجاح",
                 );
+                GoRouter.of(
+                  context,
+                ).pushReplacement(AppRouter.managerDashboardView);
                 print(state.user.id);
                 print(state.user.name);
                 print(state.user.email);
