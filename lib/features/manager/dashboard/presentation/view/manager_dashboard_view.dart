@@ -264,8 +264,26 @@ class ManagerDashboardView extends StatelessWidget {
                       title: 'إدارة المستخدمين',
                       subtitle: 'إضافة وتعديل حسابات الطلاب والمعلمين',
                       color: const Color(0xFF287763),
-                      onTap: () {
-                        // TODO: Navigate to users management
+                      onTap: () async {
+                        // DioClient dioClient = DioClient();
+                        // final res = await dioClient.post(
+                        //   "teachers/add_teacher.php",
+                        //   data: {
+                        //     "teacher_name": "أحمد محمد",
+                        //     "email": "ahmed12112a@example.com",
+                        //     "password": "07700770",
+                        //     "manager_id": 6,
+                        //     "phone": "077012345671",
+                        //   },
+                        // );
+                        // print(res);
+                        // print(res["message"]);
+                        // final ress = await dioClient.get(
+                        //   queryParameters: {"manager_id": 6},
+                        //   "teachers/get_teachers.php",
+                        // );
+                        // print(ress);
+                        // print(ress["message"]);
                       },
                     ),
                     const SizedBox(height: 12),
