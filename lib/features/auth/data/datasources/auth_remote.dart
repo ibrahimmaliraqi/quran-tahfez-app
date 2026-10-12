@@ -23,11 +23,16 @@ class ApiAuthRemote implements AuthRemote {
         "users/login.php",
         data: {"email": email, "password": password},
       );
+      print("Response: $res");
+      print("Response type: ${res.runtimeType}");
       if (res["success"] == true) {
         return UserModel.fromMap(res['data']['user']);
       }
       throw ServerException(errMessage: res['message']);
+    } on ServerException {
+      rethrow;
     } catch (e) {
+      print(e);
       throw ServerException(errMessage: "حدث خطا غير متوقع");
     }
   }

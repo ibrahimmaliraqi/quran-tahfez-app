@@ -45,8 +45,8 @@ class UserModel {
       name: map['name'] != null ? map['name'] as String : null,
       email: map['email'] != null ? map['email'] as String : null,
       role: map['role'] != null ? map['role'] as String : null,
-      createdAt: map['createdAt'] != null ? map['createdAt'] as String : null,
-      isActive: map['isActive'] != null ? map['isActive'] as bool : null,
+      createdAt: map['created_at'] != null ? map['created_at'] as String : null,
+      isActive: map['is_active'] != null ? map['is_active'] as bool : null,
     );
   }
 }

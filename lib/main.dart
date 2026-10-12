@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:quran_tahfez/core/router/app_router.dart';
+import 'package:quran_tahfez/core/service/server_locator.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupLocator();
+
   runApp(const MyApp());
 }
 

@@ -28,6 +28,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'يرجى إدخال ${widget.title}';
+        }
+
+        return null;
+      },
       controller: widget.controller,
       keyboardType: widget.keyboardType,
       obscureText: widget.isPassword && isObscured,

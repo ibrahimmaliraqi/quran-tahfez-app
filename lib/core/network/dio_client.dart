@@ -6,10 +6,13 @@ class DioClient {
   DioClient()
     : _dio = Dio(
         BaseOptions(
+          validateStatus: (status) {
+            return status != null && status < 500;
+          },
           baseUrl: "http://hifzquran.mywebcommunity.org/",
           headers: {
-            'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
           },
         ),
       );

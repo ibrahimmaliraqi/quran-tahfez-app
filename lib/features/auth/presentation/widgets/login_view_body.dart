@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:quran_tahfez/core/widgets/custom_button.dart';
 import 'package:quran_tahfez/core/widgets/custom_text_field.dart';
+import 'package:quran_tahfez/core/widgets/loading.dart';
+import 'package:quran_tahfez/core/widgets/snack.dart';
+import 'package:quran_tahfez/features/auth/presentation/manager/login/login_cubit.dart';
 import 'package:quran_tahfez/features/auth/presentation/widgets/forget_password.dart';
 import 'package:quran_tahfez/features/auth/presentation/widgets/login_header.dart';
 
@@ -17,6 +21,7 @@ class LoginViewBody extends StatefulWidget {
 class _LoginViewBodyState extends State<LoginViewBody> {
   final TextEditingController emailCon = TextEditingController();
   final TextEditingController passwordCon = TextEditingController();
+  GlobalKey<FormState> vali = GlobalKey();
 
   @override
   void dispose() {
@@ -27,44 +32,78 @@ class _LoginViewBodyState extends State<LoginViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        LoginHeader(),
+    return Form(
+      key: vali,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          LoginHeader(),
 
-        const Gap(30),
+          const Gap(30),
 
-        _FieldLabel(text: 'البريد الإلكتروني'),
-        const Gap(10),
-        CustomTextField(
-          icon: Icons.email_outlined,
-          title: 'أدخل بريدك الإلكتروني',
-          controller: emailCon,
-          keyboardType: TextInputType.emailAddress,
-        ),
+          _FieldLabel(text: 'البريد الإلكتروني'),
+          const Gap(10),
+          CustomTextField(
+            icon: Icons.email_outlined,
+            title: 'أدخل بريدك الإلكتروني',
+            controller: emailCon,
+            keyboardType: TextInputType.emailAddress,
+          ),
 
-        const Gap(22),
+          const Gap(22),
 
-        _FieldLabel(text: 'كلمة المرور'),
-        const Gap(10),
-        CustomTextField(
-          icon: Icons.lock_outline_rounded,
-          title: 'أدخل كلمة المرور',
-          controller: passwordCon,
-        ),
+          _FieldLabel(text: 'كلمة المرور'),
+          const Gap(10),
+          CustomTextField(
+            icon: Icons.lock_outline_rounded,
+            title: 'أدخل كلمة المرور',
+            controller: passwordCon,
+          ),
 
-        const Gap(8),
+          const Gap(8),
 
-        ForgerPasswordWidget(),
+          ForgerPasswordWidget(),
 
-        const Gap(18),
+          const Gap(18),
 
-        CustomButton(
-          title: 'تسجيل الدخول',
-          onTap: () {},
-        ),
-        const Gap(15),
-      ],
+          BlocConsumer<LoginCubit, LoginState>(
+            listener: (context, state) {
+              if (state is LoginFailure) {
+                Snack.show(context, message: state.errMessage, isError: true);
+              }
+              if (state is LoginSuccess) {
+                Snack.show(
+                  context,
+                  message: "تم تسجيل الدخول بنجاح",
+                );
+                print(state.user.id);
+                print(state.user.name);
+                print(state.user.email);
+                print(state.user.createdAt);
+                print(state.user.isActive);
+                print(state.user.role);
+              }
+            },
+            builder: (context, state) {
+              if (state is LoginLoading) {
+                return Loading();
+              }
+              return CustomButton(
+                title: 'تسجيل الدخول',
+                onTap: () {
+                  if (vali.currentState!.validate()) {
+                    context.read<LoginCubit>().login(
+                      email: emailCon.text,
+                      password: passwordCon.text,
+                    );
+                  }
+                },
+              );
+            },
+          ),
+          const Gap(15),
+        ],
+      ),
     );
   }
 }
