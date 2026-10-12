@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'تحفيظ',
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Cairo',
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
