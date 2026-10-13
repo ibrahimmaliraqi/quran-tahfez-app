@@ -8,4 +8,5 @@ abstract class AuthRepo {
     required String email,
     required String password,
   });
+  Future<void> saveUser({required UserEntity user});
 }

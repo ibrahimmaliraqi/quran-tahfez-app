@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:quran_tahfez/core/constants/app_colors.dart';
 import 'package:quran_tahfez/core/constants/assets/assets.dart';
 import 'package:quran_tahfez/core/router/app_router.dart';
+import 'package:quran_tahfez/core/service/prefs_helper.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -20,7 +21,12 @@ class _SplashViewState extends State<SplashView> {
     Future.delayed(
       Duration(seconds: 3),
       () {
-        GoRouter.of(context).pushReplacement(AppRouter.login);
+        final user = PrefsHelper.getUser();
+        if (user == null) {
+          GoRouter.of(context).pushReplacement(AppRouter.login);
+        } else {
+          GoRouter.of(context).pushReplacement(AppRouter.managerRootView);
+        }
       },
     );
     super.initState();
