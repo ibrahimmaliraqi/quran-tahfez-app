@@ -1,21 +1,21 @@
 class TeacherEntity {
-  int? id;
-  int? managerId;
-  int? userId;
-  String? teacherName;
-  String? email;
-  String? phone;
-  bool? isActive;
-  String? createdAt;
+  final int id;
+  final int managerId;
+  final int userId;
+  final String teacherName;
+  final String email;
+  final String phone;
+  final bool isActive;
+  final String createdAt;
 
   TeacherEntity({
-    this.id,
-    this.managerId,
-    this.userId,
-    this.teacherName,
-    this.email,
-    this.phone,
-    this.isActive,
-    this.createdAt,
+    required this.id,
+    required this.managerId,
+    required this.userId,
+    required this.teacherName,
+    required this.email,
+    required this.phone,
+    required this.isActive,
+    required this.createdAt,
   });
 }

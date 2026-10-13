@@ -5,12 +5,14 @@ import 'package:quran_tahfez/core/router/app_router.dart';
 import 'package:quran_tahfez/core/service/prefs_helper.dart';
 import 'package:quran_tahfez/core/service/server_locator.dart';
 import 'package:quran_tahfez/core/utils/app_bloc_observer.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   await PrefsHelper.init();
   Bloc.observer = AppBlocObserver();
+  timeago.setLocaleMessages('ar', timeago.ArMessages());
 
   runApp(const MyApp());
 }

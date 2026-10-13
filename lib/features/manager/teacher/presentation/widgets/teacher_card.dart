@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:quran_tahfez/core/domain/teacher/entities/teacher_entity.dart';
+import 'package:quran_tahfez/core/functions/get_time_ago.dart';
 
 class TeacherCard extends StatelessWidget {
-  final Map<String, dynamic> teacher;
+  final TeacherEntity teacher;
 
   const TeacherCard({
     super.key,
@@ -11,20 +12,6 @@ class TeacherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = teacher['teacher_name']?.toString() ?? 'بدون اسم';
-    final email = teacher['email']?.toString() ?? '';
-    final createdAt = teacher['created_at']?.toString() ?? '';
-
-    String date = createdAt;
-
-    try {
-      date = DateFormat('yyyy/MM/dd').format(
-        DateTime.parse(createdAt),
-      );
-    } catch (_) {
-      // يبقى التاريخ كما وصل من المصدر.
-    }
-
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -41,7 +28,7 @@ class TeacherCard extends StatelessWidget {
                 radius: 23,
                 backgroundColor: const Color(0xFFDDF0E9),
                 child: Text(
-                  name.isEmpty ? '?' : name.characters.first,
+                  teacher.teacherName.characters.first,
                   style: const TextStyle(
                     color: Color(0xFF1E6553),
                     fontSize: 20,
@@ -55,7 +42,7 @@ class TeacherCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      name,
+                      teacher.teacherName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -66,7 +53,18 @@ class TeacherCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      email,
+                      "الايميل: ${teacher.email}",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Color(0xFF718096),
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      "رقم الهاتف: ${teacher.phone}",
+
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -103,7 +101,7 @@ class TeacherCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                date,
+                getTimeAgo(teacher.createdAt),
                 style: const TextStyle(
                   color: Color(0xFF2D3748),
                   fontSize: 12,
