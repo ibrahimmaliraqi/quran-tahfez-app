@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quran_tahfez/core/constants/app_colors.dart';
 import 'package:quran_tahfez/core/constants/app_string.dart';
 import 'package:quran_tahfez/core/domain/teacher/entities/add_teacher_entity.dart';
 import 'package:quran_tahfez/core/widgets/custom_button.dart';
@@ -86,9 +87,12 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                     children: [
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(),
-                        child: const Text(
+                        child: Text(
                           'إلغاء',
-                          style: TextStyle(color: Color(0xFF718096)),
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       Spacer(),
