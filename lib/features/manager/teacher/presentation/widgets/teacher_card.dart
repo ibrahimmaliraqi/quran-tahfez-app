@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quran_tahfez/core/domain/teacher/entities/teacher_entity.dart';
+import 'package:quran_tahfez/core/domain/teacher/enums/taecher_enum.dart';
 import 'package:quran_tahfez/core/functions/get_time_ago.dart';
 
 class TeacherCard extends StatelessWidget {
@@ -41,15 +42,56 @@ class TeacherCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      teacher.teacherName,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: Color(0xFF2D3748),
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          teacher.teacherName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: Color(0xFF2D3748),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Spacer(),
+
+                        PopupMenuButton<TeacherEnumAction>(
+                          color: Colors.white,
+                          icon: const Icon(Icons.more_vert),
+                          onSelected: (action) {
+                            switch (action) {
+                              case TeacherEnumAction.edit:
+                                debugPrint(
+                                  'edit teacher: ${teacher.teacherName}',
+                                );
+                                break;
+
+                              case TeacherEnumAction.delete:
+                                debugPrint(
+                                  'delete teacher: ${teacher.teacherName}',
+                                );
+                                break;
+                            }
+                          },
+                          itemBuilder: (context) =>
+                              TeacherEnumAction.values.map((action) {
+                                return PopupMenuItem<TeacherEnumAction>(
+                                  value: action,
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        action.icon,
+                                        color: action.color,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(action.title),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 5),
                     Text(
@@ -114,4 +156,18 @@ class TeacherCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class AppPopupMenuAction<T> {
+  final T value;
+  final String title;
+  final IconData icon;
+  final Color? color;
+
+  const AppPopupMenuAction({
+    required this.value,
+    required this.title,
+    required this.icon,
+    this.color,
+  });
 }
