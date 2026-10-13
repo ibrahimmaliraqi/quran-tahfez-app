@@ -36,4 +36,16 @@ class TeacherRepoImpl implements TeacherRepo {
       return left(ServerFailure(message: e.errMessage));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> deleteTeacher({
+    required int teacherId,
+  }) async {
+    try {
+      final res = await teacherRemote.deleteTeacher(teacherId: teacherId);
+      return right(res);
+    } on AppExceptions catch (e) {
+      return left(ServerFailure(message: e.errMessage));
+    }
+  }
 }

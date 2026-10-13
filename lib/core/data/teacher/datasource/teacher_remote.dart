@@ -10,6 +10,9 @@ abstract class TeacherRemote {
   Future<List<TeacherModel>> getTeachers({
     required int managerId,
   });
+  Future<String> deleteTeacher({
+    required int teacherId,
+  });
 }
 
 class ApiTeacherRemoteImpl implements TeacherRemote {
@@ -61,6 +64,30 @@ class ApiTeacherRemoteImpl implements TeacherRemote {
       return teachersList
           .map((teacher) => TeacherModel.fromMap(teacher))
           .toList();
+    } catch (e) {
+      if (e is ServerException) rethrow;
+
+      throw ServerException(
+        errMessage: 'حدث خطأ غير متوقع',
+      );
+    }
+  }
+
+  @override
+  Future<String> deleteTeacher({required int teacherId}) async {
+    try {
+      final res = await dioClient.post(
+        "teachers/delete_teacher.php",
+
+        data: {"teacher_id": teacherId},
+      );
+
+      if (res['success'] != true) {
+        throw ServerException(
+          errMessage: res['message'],
+        );
+      }
+      return res['message'];
     } catch (e) {
       if (e is ServerException) rethrow;
 

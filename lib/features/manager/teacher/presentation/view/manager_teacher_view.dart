@@ -5,6 +5,7 @@ import 'package:quran_tahfez/core/functions/open_dialog.dart';
 import 'package:quran_tahfez/core/service/prefs_helper.dart';
 import 'package:quran_tahfez/core/service/server_locator.dart';
 import 'package:quran_tahfez/features/manager/teacher/presentation/manager/add_teacher/add_teacher_cubit.dart';
+import 'package:quran_tahfez/features/manager/teacher/presentation/manager/delete_teacher/delete_teacher_cubit.dart';
 import 'package:quran_tahfez/features/manager/teacher/presentation/manager/get_teachers/get_teachers_cubit.dart';
 import 'package:quran_tahfez/features/manager/teacher/presentation/widgets/add_teacher_dialog.dart';
 import 'package:quran_tahfez/features/manager/teacher/presentation/widgets/manager_teacher_view_body.dart';
@@ -14,10 +15,18 @@ class ManagerTeachersView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => GetTeachersCubit(
-        teacherRepo: getIt.get<TeacherRepo>(),
-      )..getTeachers(managerId: PrefsHelper.getUser()!.id!),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => GetTeachersCubit(
+            teacherRepo: getIt.get<TeacherRepo>(),
+          )..getTeachers(managerId: PrefsHelper.getUser()!.id!),
+        ),
+        BlocProvider(
+          create: (context) =>
+              DeleteTeacherCubit(teacherRepo: getIt.get<TeacherRepo>()),
+        ),
+      ],
       child: Builder(
         builder: (context) {
           return Scaffold(

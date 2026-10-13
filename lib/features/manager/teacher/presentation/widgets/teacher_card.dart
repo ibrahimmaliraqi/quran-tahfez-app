@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quran_tahfez/core/domain/teacher/entities/teacher_entity.dart';
 import 'package:quran_tahfez/core/domain/teacher/enums/taecher_enum.dart';
 import 'package:quran_tahfez/core/functions/get_time_ago.dart';
+import 'package:quran_tahfez/features/manager/teacher/presentation/manager/delete_teacher/delete_teacher_cubit.dart';
 
 class TeacherCard extends StatelessWidget {
   final TeacherEntity teacher;
@@ -68,9 +70,9 @@ class TeacherCard extends StatelessWidget {
                                 break;
 
                               case TeacherEnumAction.delete:
-                                debugPrint(
-                                  'delete teacher: ${teacher.teacherName}',
-                                );
+                                context
+                                    .read<DeleteTeacherCubit>()
+                                    .deleteTeacher(teacherId: teacher.userId);
                                 break;
                             }
                           },

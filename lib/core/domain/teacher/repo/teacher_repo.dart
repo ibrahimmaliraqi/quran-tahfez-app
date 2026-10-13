@@ -10,4 +10,7 @@ abstract class TeacherRepo {
   Future<Either<Failure, List<TeacherEntity>>> getTeachers({
     required int managerId,
   });
+  Future<Either<Failure, String>> deleteTeacher({
+    required int teacherId,
+  });
 }
