@@ -1,0 +1,29 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class AppBlocObserver extends BlocObserver {
+  @override
+  void onCreate(BlocBase bloc) {
+    super.onCreate(bloc);
+
+    debugPrint('🟢 ${bloc.runtimeType} Created');
+  }
+
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    super.onChange(bloc, change);
+
+    debugPrint(
+      '🔄 ${bloc.runtimeType}\n'
+      'Current: ${change.currentState}\n'
+      'Next: ${change.nextState}',
+    );
+  }
+
+  @override
+  void onClose(BlocBase bloc) {
+    debugPrint('⚫ ${bloc.runtimeType} Closed');
+
+    super.onClose(bloc);
+  }
+}
