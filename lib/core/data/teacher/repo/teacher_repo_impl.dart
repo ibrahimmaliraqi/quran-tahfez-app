@@ -24,4 +24,16 @@ class TeacherRepoImpl implements TeacherRepo {
       return left(ServerFailure(message: e.errMessage));
     }
   }
+
+  @override
+  Future<Either<Failure, List<TeacherEntity>>> getTeachers({
+    required int managerId,
+  }) async {
+    try {
+      final res = await teacherRemote.getTeachers(managerId: managerId);
+      return right(res.map((teacherModel) => teacherModel.toEntity()).toList());
+    } on AppExceptions catch (e) {
+      return left(ServerFailure(message: e.errMessage));
+    }
+  }
 }

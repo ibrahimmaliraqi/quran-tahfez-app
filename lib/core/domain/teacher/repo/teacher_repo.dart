@@ -7,4 +7,7 @@ abstract class TeacherRepo {
   Future<Either<Failure, TeacherEntity>> addTeacher({
     required AddTeacherEntity data,
   });
+  Future<Either<Failure, List<TeacherEntity>>> getTeachers({
+    required int managerId,
+  });
 }
