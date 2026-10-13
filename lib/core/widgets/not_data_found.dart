@@ -1,96 +1,86 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:quran_tahfez/core/constants/app_colors.dart';
 
 class NoDataWidget extends StatelessWidget {
+  final IconData icon;
   final String title;
   final String subtitle;
-  final IconData icon;
+  final bool showAction;
+  final IconData actionIcon;
+  final String actionText;
   final VoidCallback? onAction;
-  final String? actionText;
-  final IconData? actionIcon;
 
   const NoDataWidget({
     super.key,
-    this.title = "لا توجد بيانات",
-    this.subtitle = "القائمة فارغة في الوقت الحالي.",
-    this.icon = Icons.folder_open_rounded, // أيقونة افتراضية
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    this.showAction = false,
+    this.actionIcon = Icons.add,
+    this.actionText = 'إضافة',
     this.onAction,
-    this.actionText,
-    this.actionIcon = Icons.add_rounded,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize:
-              MainAxisSize.min, // ليأخذ مساحة المحتوى فقط إذا وضع في ListView
-          children: [
-            // خلفية دائرية هادئة للأيقونة
-            Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade50,
+    const primaryColor = Color(0xFF1E6553);
+    const textColor = Color(0xFF2D3748);
+    const mutedColor = Color(0xFF718096);
 
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.grey.shade100, width: 2),
-              ),
-              child: Icon(icon, size: 64, color: AppColors.primary),
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 30,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: const Color(0xFFE7EBE8),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            color: primaryColor,
+            size: 42,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: textColor,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
-            const Gap(24),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
+          ),
+          const SizedBox(height: 7),
+          Text(
+            subtitle,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: mutedColor,
+              fontSize: 12,
             ),
-            const Gap(12),
-            Text(
-              subtitle,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.grey.shade600,
-                height: 1.5,
-              ),
-            ),
-
-            // عرض الزر فقط إذا تم تمرير دالة الإجراء ونص الزر
-            if (onAction != null && actionText != null) ...[
-              const Gap(32),
-              SizedBox(
-                height: 50,
-                child: ElevatedButton.icon(
-                  onPressed: onAction,
-                  icon: Icon(actionIcon, size: 22),
-                  label: Text(
-                    actionText!,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
-                    elevation: 0,
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
+          ),
+          if (showAction) ...[
+            const SizedBox(height: 16),
+            OutlinedButton.icon(
+              onPressed: onAction,
+              icon: Icon(actionIcon),
+              label: Text(actionText),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: primaryColor,
+                side: const BorderSide(
+                  color: primaryColor,
                 ),
               ),
-            ],
+            ),
           ],
-        ),
+        ],
       ),
     );
   }

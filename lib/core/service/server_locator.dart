@@ -1,4 +1,7 @@
 import 'package:get_it/get_it.dart';
+import 'package:quran_tahfez/core/data/teacher/datasource/teacher_remote.dart';
+import 'package:quran_tahfez/core/data/teacher/repo/teacher_repo_impl.dart';
+import 'package:quran_tahfez/core/domain/teacher/repo/teacher_repo.dart';
 import 'package:quran_tahfez/core/network/dio_client.dart';
 import 'package:quran_tahfez/features/auth/data/datasources/auth_remote.dart';
 import 'package:quran_tahfez/features/auth/data/repositories/auth_repo_impl.dart';
@@ -12,9 +15,15 @@ void setupLocator() {
   getIt.registerSingleton<AuthRemote>(
     ApiAuthRemote(dioClient: getIt.get<DioClient>()),
   );
+  getIt.registerSingleton<TeacherRemote>(
+    ApiTeacherRemoteImpl(dioClient: getIt.get<DioClient>()),
+  );
 
   //repo
   getIt.registerSingleton<AuthRepo>(
     AuthRepoImpl(authRemote: getIt.get<AuthRemote>()),
+  );
+  getIt.registerSingleton<TeacherRepo>(
+    TeacherRepoImpl(teacherRemote: getIt.get<TeacherRemote>()),
   );
 }

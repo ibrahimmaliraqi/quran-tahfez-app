@@ -14,16 +14,15 @@ class LoginHeader extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 94,
-          height: 94,
-          padding: const EdgeInsets.all(13),
+          padding: EdgeInsets.all(17),
           decoration: BoxDecoration(
             color: const Color(0xFFEAF3ED),
             borderRadius: BorderRadius.circular(27),
           ),
           child: Image.asset(
             Assets.assetsImagesLogo,
-            fit: BoxFit.contain,
+            width: 94,
+            height: 94,
           ),
         ),
 

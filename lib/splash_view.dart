@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quran_tahfez/core/constants/app_colors.dart';
+import 'package:quran_tahfez/core/constants/assets/assets.dart';
 import 'package:quran_tahfez/core/router/app_router.dart';
 
 class SplashView extends StatefulWidget {
@@ -56,10 +57,10 @@ class _SplashViewState extends State<SplashView> {
                     width: 1.5,
                   ),
                 ),
-                child: const Icon(
-                  Icons.menu_book_rounded,
-                  size: 85,
-                  color: SplashView.goldColor,
+                child: Image.asset(
+                  Assets.assetsImagesLogo,
+                  width: 150,
+                  height: 150,
                 ),
               ),
 
