@@ -79,7 +79,45 @@ class _ManagerTeachersViewState extends State<ManagerTeachersView> {
                   const SizedBox(height: 16),
                   _buildInput(
                     controller: emailController,
+                    label: "رقم الهاتف",
+                    icon: Icons.email_outlined,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'أدخل البريد الإلكتروني';
+                      }
+
+                      if (!value.contains('@') || !value.contains('.')) {
+                        return 'البريد الإلكتروني غير صحيح';
+                      }
+
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+
+                  _buildInput(
+                    controller: emailController,
                     label: 'البريد الإلكتروني',
+                    icon: Icons.email_outlined,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'أدخل البريد الإلكتروني';
+                      }
+
+                      if (!value.contains('@') || !value.contains('.')) {
+                        return 'البريد الإلكتروني غير صحيح';
+                      }
+
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+
+                  _buildInput(
+                    controller: emailController,
+                    label: "كلمة السر",
                     icon: Icons.email_outlined,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
