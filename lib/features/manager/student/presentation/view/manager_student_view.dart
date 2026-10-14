@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quran_tahfez/core/domain/student/repo/student_repo.dart';
 import 'package:quran_tahfez/core/functions/open_dialog.dart';
+import 'package:quran_tahfez/core/service/server_locator.dart';
+import 'package:quran_tahfez/features/manager/student/presentation/manager/add_student/add_student_cubit.dart';
 import 'package:quran_tahfez/features/manager/student/presentation/widgets/add_student_dialog.dart';
 import 'package:quran_tahfez/features/manager/student/presentation/widgets/manager_student_view_body.dart';
 
@@ -16,7 +20,17 @@ class _ManagerStudentsViewState extends State<ManagerStudentsView> {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         heroTag: "add_student",
-        onPressed: () async => openDialog(context, widget: AddStudentDialog()),
+        onPressed: () async => openDialog(
+          context,
+          widget: MultiBlocProvider(
+            providers: [
+              BlocProvider.value(
+                value: AddStudentCubit(studentRepo: getIt.get<StudentRepo>()),
+              ),
+            ],
+            child: AddStudentDialog(),
+          ),
+        ),
         icon: const Icon(Icons.add),
         label: const Text(
           'إضافة طالب',

@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quran_tahfez/core/constants/app_colors.dart';
+import 'package:quran_tahfez/core/constants/app_string.dart';
+import 'package:quran_tahfez/core/domain/student/entities/add_student_entity.dart';
+import 'package:quran_tahfez/core/service/prefs_helper.dart';
 import 'package:quran_tahfez/core/widgets/custom_button.dart';
 import 'package:quran_tahfez/core/widgets/dialog_text_field.dart';
+import 'package:quran_tahfez/core/widgets/loading.dart';
 import 'package:quran_tahfez/core/widgets/seactions_title.dart';
+import 'package:quran_tahfez/core/widgets/snack.dart';
+import 'package:quran_tahfez/features/manager/student/presentation/manager/add_student/add_student_cubit.dart';
 import 'package:quran_tahfez/features/manager/student/presentation/widgets/add_student_header.dart';
 
 class AddStudentDialog extends StatefulWidget {
@@ -199,9 +207,48 @@ class _AddStudentDialogState extends State<AddStudentDialog> {
 
           Expanded(
             flex: 2,
-            child: CustomButton(
-              title: 'إضافة الطالب',
-              width: 100,
+            child: BlocConsumer<AddStudentCubit, AddStudentState>(
+              listener: (context, state) {
+                if (state is AddStudentSuccess) {
+                  GoRouter.of(context).pop();
+                  Snack.show(
+                    context,
+                    message: 'تمت إضافة الطالب بنجاح',
+                  );
+                }
+                if (state is AddStudentFailure) {
+                  GoRouter.of(context).pop();
+
+                  Snack.show(context, message: state.errMessage, isError: true);
+                }
+              },
+              builder: (context, state) {
+                if (state is AddStudentLoading) {
+                  return Loading();
+                }
+                return CustomButton(
+                  title: 'إضافة الطالب',
+                  width: 100,
+                  onTap: () {
+                    AddStudentEntity data = AddStudentEntity(
+                      password: passwordController.text,
+                      managerId: PrefsHelper.getUser()!.id!,
+                      teacherId: 38,
+                      studentName: studentNameController.text,
+                      email: emailController.text.trim(),
+                      phone: phoneController.text,
+                      parentPhone: parentPhoneController.text,
+                      image: "",
+                      nearestLandmark: nearestLandmarkController.text,
+                      educationLevel: educationLevelController.text,
+                      lastPage: 0,
+                      age: int.parse(ageController.text),
+                      createdAt: AppString.currentTime,
+                    );
+                    context.read<AddStudentCubit>().addStudent(data: data);
+                  },
+                );
+              },
             ),
           ),
         ],
