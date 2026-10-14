@@ -29,4 +29,27 @@ class AuthRepoImpl implements AuthRepo {
   Future<void> saveUser({required UserEntity user}) async {
     await PrefsHelper.saveUser(user);
   }
+
+  @override
+  Future<Either<Failure, UserEntity>> register({
+    required String email,
+    required String password,
+    required String name,
+    required String role,
+    required String createdAt,
+  }) async {
+    try {
+      final res = await authRemote.register(
+        email: email,
+        password: password,
+        name: name,
+        role: role,
+        createdAt: createdAt,
+      );
+      UserEntity user = res.toEntity();
+      return right(user);
+    } on AppExceptions catch (e) {
+      return left(ServerFailure(message: e.errMessage));
+    }
+  }
 }
