@@ -4,6 +4,7 @@ class StudentModel {
   final int id;
   final int managerId;
   final int teacherId;
+  final String teacherName;
   final int userId;
   final String studentName;
   final String email;
@@ -18,6 +19,7 @@ class StudentModel {
   StudentModel({
     required this.id,
     required this.managerId,
+    required this.teacherName,
     required this.teacherId,
     required this.userId,
     required this.studentName,
@@ -33,6 +35,7 @@ class StudentModel {
   });
   factory StudentModel.fromMap(Map<String, dynamic> json) {
     return StudentModel(
+      teacherName: json['teacher_name'],
       id: json['id'] as int,
       managerId: json['manager_id'] as int,
       teacherId: json['teacher_id'] as int,
@@ -57,6 +60,7 @@ class StudentModel {
       userId: userId,
       studentName: studentName,
       email: email,
+      teacherName: teacherName,
       phone: phone,
       parentPhone: parentPhone,
       image: image,
