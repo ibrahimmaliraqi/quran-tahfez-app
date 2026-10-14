@@ -7,6 +7,9 @@ abstract class StudentRemote {
   Future<StudentModel> addStudent({
     required AddStudentModel data,
   });
+  Future<List<StudentModel>> getStudents({
+    required int managerId,
+  });
 }
 
 class ApiStudentRemoteImpl implements StudentRemote {
@@ -28,6 +31,31 @@ class ApiStudentRemoteImpl implements StudentRemote {
         );
       }
       return StudentModel.fromMap(res['data']['student']);
+    } catch (e) {
+      if (e is ServerException) rethrow;
+
+      throw ServerException(
+        errMessage: 'حدث خطأ غير متوقع',
+      );
+    }
+  }
+
+  @override
+  Future<List<StudentModel>> getStudents({required int managerId}) async {
+    try {
+      final res = await dioClient.post(
+        "students/get_students.php",
+
+        data: {"manager_id": managerId},
+      );
+
+      if (res['success'] != true) {
+        throw ServerException(
+          errMessage: res['message'],
+        );
+      }
+      final dataList = res['data']['students'] as List;
+      return dataList.map((student) => StudentModel.fromMap(student)).toList();
     } catch (e) {
       if (e is ServerException) rethrow;
 

@@ -34,4 +34,16 @@ class StudentRepoImpl implements StudentRepo {
       return left(ServerFailure(message: e.errMessage));
     }
   }
+
+  @override
+  Future<Either<Failure, List<StudentEntity>>> getStudents({
+    required int managerId,
+  }) async {
+    try {
+      final res = await studentRemote.getStudents(managerId: managerId);
+      return right(res.map((studentModel) => studentModel.toEntity()).toList());
+    } on AppExceptions catch (e) {
+      return left(ServerFailure(message: e.errMessage));
+    }
+  }
 }

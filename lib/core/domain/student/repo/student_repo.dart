@@ -7,4 +7,7 @@ abstract class StudentRepo {
   Future<Either<Failure, StudentEntity>> addStudent({
     required AddStudentEntity data,
   });
+  Future<Either<Failure, List<StudentEntity>>> getStudents({
+    required int managerId,
+  });
 }
