@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quran_tahfez/core/domain/student/repo/student_repo.dart';
+import 'package:quran_tahfez/core/domain/teacher/repo/teacher_repo.dart';
 import 'package:quran_tahfez/core/functions/open_dialog.dart';
+import 'package:quran_tahfez/core/service/prefs_helper.dart';
 import 'package:quran_tahfez/core/service/server_locator.dart';
 import 'package:quran_tahfez/features/manager/student/presentation/manager/add_student/add_student_cubit.dart';
 import 'package:quran_tahfez/features/manager/student/presentation/widgets/add_student_dialog.dart';
 import 'package:quran_tahfez/features/manager/student/presentation/widgets/manager_student_view_body.dart';
+import 'package:quran_tahfez/features/manager/teacher/presentation/manager/get_teachers/get_teachers_cubit.dart';
 
 class ManagerStudentsView extends StatefulWidget {
   const ManagerStudentsView({super.key});
@@ -26,6 +29,11 @@ class _ManagerStudentsViewState extends State<ManagerStudentsView> {
             providers: [
               BlocProvider.value(
                 value: AddStudentCubit(studentRepo: getIt.get<StudentRepo>()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    GetTeachersCubit(teacherRepo: getIt.get<TeacherRepo>())
+                      ..getTeachers(managerId: PrefsHelper.getUser()!.id!),
               ),
             ],
             child: AddStudentDialog(),
