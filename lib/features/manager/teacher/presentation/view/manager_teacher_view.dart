@@ -32,6 +32,7 @@ class ManagerTeachersView extends StatelessWidget {
           return Scaffold(
             backgroundColor: const Color(0xFFF7F8F6),
             floatingActionButton: FloatingActionButton.extended(
+              heroTag: "add_teacher",
               onPressed: () {
                 openDialog(
                   context,

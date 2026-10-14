@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:quran_tahfez/core/domain/student/entities/student_entity.dart';
 
 class StudentCard extends StatelessWidget {
-  final Map<String, dynamic> student;
+  final StudentEntity student;
 
   const StudentCard({
     super.key,
@@ -17,20 +18,13 @@ class StudentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = _value('student_name', fallback: 'بدون اسم');
-    final email = _value('email');
-    final phone = _value('phone');
-    final teacher = _value('teacher_name');
-    final educationLevel = _value('education_level');
-    final image = _value('image');
+    final name = student.studentName;
+    final email = student.email;
+    final phone = student.phone;
+    final educationLevel = student.educationLevel;
+    final image = student.image;
 
-    final lastPage =
-        (int.tryParse(
-                  _value('last_page', fallback: '0'),
-                ) ??
-                0)
-            .clamp(0, totalQuranPages);
-
+    final lastPage = student.lastPage.clamp(0, totalQuranPages);
     final progress = lastPage / totalQuranPages;
 
     return Container(
@@ -56,7 +50,7 @@ class StudentCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      name,
+                      name.isEmpty ? 'بدون اسم' : name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -65,13 +59,11 @@ class StudentCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    if (teacher.isNotEmpty) ...[
-                      const SizedBox(height: 6),
-                      _infoRow(
-                        icon: Icons.school_outlined,
-                        text: teacher,
-                      ),
-                    ],
+                    const SizedBox(height: 6),
+                    _infoRow(
+                      icon: Icons.school_outlined,
+                      text: 'رقم المدرّس: ${student.teacherId}',
+                    ),
                     if (educationLevel.isNotEmpty) ...[
                       const SizedBox(height: 5),
                       _infoRow(
@@ -175,16 +167,8 @@ class StudentCard extends StatelessWidget {
     );
   }
 
-  String _value(
-    String key, {
-    String fallback = '',
-  }) {
-    final value = student[key]?.toString().trim() ?? '';
-    return value.isEmpty || value == 'null' ? fallback : value;
-  }
-
-  Widget _buildAvatar(String name, String image) {
-    if (image.isNotEmpty) {
+  Widget _buildAvatar(String name, String? image) {
+    if (image != null && image.trim().isNotEmpty) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: Image.network(
