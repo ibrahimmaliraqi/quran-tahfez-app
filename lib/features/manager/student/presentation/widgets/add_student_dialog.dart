@@ -60,278 +60,274 @@ class _AddStudentDialogState extends State<AddStudentDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Dialog(
-        backgroundColor: Colors.transparent,
-        insetPadding: const EdgeInsets.symmetric(
-          horizontal: 18,
-          vertical: 24,
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      insetPadding: const EdgeInsets.symmetric(
+        horizontal: 18,
+        vertical: 24,
+      ),
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 460),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(22),
         ),
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 460),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(22),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AddStudentHeader(),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AddStudentHeader(),
 
-              Flexible(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
-                  child: Form(
-                    key: vali,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SeactionsTitle(
-                          title: "اختار المدرس",
-                          icon: Icons.person_outline,
-                        ),
-                        const Gap(10),
-                        BlocBuilder<GetTeachersCubit, GetTeachersState>(
-                          builder: (context, state) {
-                            if (state is GetTeachersSuccess) {
-                              final teachers = state.teachers;
+            Flexible(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
+                child: Form(
+                  key: vali,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SeactionsTitle(
+                        title: "اختار المدرس",
+                        icon: Icons.person_outline,
+                      ),
+                      const Gap(10),
+                      BlocBuilder<GetTeachersCubit, GetTeachersState>(
+                        builder: (context, state) {
+                          if (state is GetTeachersSuccess) {
+                            final teachers = state.teachers;
 
-                              if (teachers.isEmpty) {
-                                return const Text('لا يوجد مدرسون');
-                              }
+                            if (teachers.isEmpty) {
+                              return const Text('لا يوجد مدرسون');
+                            }
 
-                              return PopupMenuButton<int>(
-                                tooltip: 'اختيار المدرس',
-                                initialValue: selectedTeacherId,
-                                offset: const Offset(0, 55),
-                                constraints: const BoxConstraints(
-                                  minWidth: 300,
-                                  maxWidth: 400,
-                                ),
-                                color: Colors.white,
-                                elevation: 8,
-                                shadowColor: Colors.black12,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                onSelected: (teacherId) {
-                                  final teacher = teachers.firstWhere(
-                                    (teacher) => teacher.id == teacherId,
-                                  );
+                            return PopupMenuButton<int>(
+                              tooltip: 'اختيار المدرس',
+                              initialValue: selectedTeacherId,
+                              offset: const Offset(0, 55),
+                              constraints: const BoxConstraints(
+                                minWidth: 300,
+                                maxWidth: 400,
+                              ),
+                              color: Colors.white,
+                              elevation: 8,
+                              shadowColor: Colors.black12,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              onSelected: (teacherId) {
+                                final teacher = teachers.firstWhere(
+                                  (teacher) => teacher.id == teacherId,
+                                );
 
-                                  setState(() {
-                                    selectedTeacherId = teacherId;
-                                    selectedTeacherName = teacher.teacherName;
-                                  });
-                                },
-                                itemBuilder: (context) {
-                                  return teachers.map((teacher) {
-                                    final isSelected =
-                                        teacher.id == selectedTeacherId;
+                                setState(() {
+                                  selectedTeacherId = teacherId;
+                                  selectedTeacherName = teacher.teacherName;
+                                });
+                              },
+                              itemBuilder: (context) {
+                                return teachers.map((teacher) {
+                                  final isSelected =
+                                      teacher.id == selectedTeacherId;
 
-                                    return PopupMenuItem<int>(
-                                      value: teacher.id,
-                                      height: 60,
-                                      child: Row(
-                                        children: [
-                                          CircleAvatar(
-                                            radius: 18,
-                                            backgroundColor: AppColors.primary
-                                                .withValues(
-                                                  alpha: 0.1,
-                                                ),
-                                            child: Icon(
-                                              Icons.person_outline,
-                                              color: AppColors.primary,
-                                            ),
-                                          ),
-                                          const Gap(12),
-                                          Expanded(
-                                            child: Text(
-                                              teacher.teacherName,
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: isSelected
-                                                    ? FontWeight.bold
-                                                    : FontWeight.w500,
-                                                color: const Color(0xFF26352C),
+                                  return PopupMenuItem<int>(
+                                    value: teacher.id,
+                                    height: 60,
+                                    child: Row(
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 18,
+                                          backgroundColor: AppColors.primary
+                                              .withValues(
+                                                alpha: 0.1,
                                               ),
+                                          child: Icon(
+                                            Icons.person_outline,
+                                            color: AppColors.primary,
+                                          ),
+                                        ),
+                                        const Gap(12),
+                                        Expanded(
+                                          child: Text(
+                                            teacher.teacherName,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: isSelected
+                                                  ? FontWeight.bold
+                                                  : FontWeight.w500,
+                                              color: const Color(0xFF26352C),
                                             ),
                                           ),
-                                          if (isSelected)
-                                            Icon(
-                                              Icons.check_circle,
-                                              color: AppColors.primary,
-                                              size: 20,
+                                        ),
+                                        if (isSelected)
+                                          Icon(
+                                            Icons.check_circle,
+                                            color: AppColors.primary,
+                                            size: 20,
+                                          ),
+                                      ],
+                                    ),
+                                  );
+                                }).toList();
+                              },
+                              child: Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 14,
+                                  vertical: 14,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFF8FAF8),
+                                  borderRadius: BorderRadius.circular(14),
+                                  border: Border.all(
+                                    color: selectedTeacherId != null
+                                        ? AppColors.primary.withValues(
+                                            alpha: 0.5,
+                                          )
+                                        : const Color(0xFFE2E8F0),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.school_outlined,
+                                      color: AppColors.primary,
+                                      size: 22,
+                                    ),
+                                    const Gap(12),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Text(
+                                            'المدرس المسؤول',
+                                            style: TextStyle(
+                                              color: Color(0xFF849188),
+                                              fontSize: 11,
                                             ),
+                                          ),
+                                          const Gap(4),
+                                          Text(
+                                            selectedTeacherName ??
+                                                'اضغط لاختيار المدرس',
+                                            style: TextStyle(
+                                              color: selectedTeacherName != null
+                                                  ? const Color(0xFF26352C)
+                                                  : const Color(0xFF849188),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
                                         ],
                                       ),
-                                    );
-                                  }).toList();
-                                },
-                                child: Container(
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 14,
-                                    vertical: 14,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFF8FAF8),
-                                    borderRadius: BorderRadius.circular(14),
-                                    border: Border.all(
-                                      color: selectedTeacherId != null
-                                          ? AppColors.primary.withValues(
-                                              alpha: 0.5,
-                                            )
-                                          : const Color(0xFFE2E8F0),
                                     ),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.school_outlined,
-                                        color: AppColors.primary,
-                                        size: 22,
-                                      ),
-                                      const Gap(12),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            const Text(
-                                              'المدرس المسؤول',
-                                              style: TextStyle(
-                                                color: Color(0xFF849188),
-                                                fontSize: 11,
-                                              ),
-                                            ),
-                                            const Gap(4),
-                                            Text(
-                                              selectedTeacherName ??
-                                                  'اضغط لاختيار المدرس',
-                                              style: TextStyle(
-                                                color:
-                                                    selectedTeacherName != null
-                                                    ? const Color(0xFF26352C)
-                                                    : const Color(0xFF849188),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.keyboard_arrow_down_rounded,
-                                        color: AppColors.primary,
-                                        size: 24,
-                                      ),
-                                    ],
-                                  ),
+                                    Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color: AppColors.primary,
+                                      size: 24,
+                                    ),
+                                  ],
                                 ),
-                              );
-                            }
+                              ),
+                            );
+                          }
 
-                            if (state is GetTeachersFailure) {
-                              return const Text('تعذر تحميل المدرسين');
-                            }
+                          if (state is GetTeachersFailure) {
+                            return const Text('تعذر تحميل المدرسين');
+                          }
 
-                            return const LinearProgressIndicator();
-                          },
-                        ),
-                        const Gap(16),
+                          return const LinearProgressIndicator();
+                        },
+                      ),
+                      const Gap(16),
 
-                        SeactionsTitle(
-                          title: 'المعلومات الشخصية',
-                          icon: Icons.person_outline,
-                        ),
-                        const Gap(16),
+                      SeactionsTitle(
+                        title: 'المعلومات الشخصية',
+                        icon: Icons.person_outline,
+                      ),
+                      const Gap(16),
 
-                        DialogTextField(
-                          controller: studentNameController,
-                          label: 'اسم الطالب',
-                          icon: Icons.person_outline,
-                        ),
-                        const Gap(8),
+                      DialogTextField(
+                        controller: studentNameController,
+                        label: 'اسم الطالب',
+                        icon: Icons.person_outline,
+                      ),
+                      const Gap(8),
 
-                        DialogTextField(
-                          controller: emailController,
-                          label: 'البريد الإلكتروني',
-                          icon: Icons.email_outlined,
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        const Gap(8),
+                      DialogTextField(
+                        controller: emailController,
+                        label: 'البريد الإلكتروني',
+                        icon: Icons.email_outlined,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      const Gap(8),
 
-                        DialogTextField(
-                          controller: passwordController,
-                          label: 'كلمة المرور',
-                          icon: Icons.lock_outline,
-                        ),
+                      DialogTextField(
+                        controller: passwordController,
+                        label: 'كلمة المرور',
+                        icon: Icons.lock_outline,
+                      ),
 
-                        const Gap(16),
+                      const Gap(16),
 
-                        SeactionsTitle(
-                          title: 'معلومات الاتصال',
-                          icon: Icons.contact_phone_outlined,
-                        ),
-                        const Gap(16),
+                      SeactionsTitle(
+                        title: 'معلومات الاتصال',
+                        icon: Icons.contact_phone_outlined,
+                      ),
+                      const Gap(16),
 
-                        DialogTextField(
-                          controller: phoneController,
-                          label: 'رقم الهاتف',
-                          icon: Icons.phone_outlined,
-                          keyboardType: TextInputType.phone,
-                        ),
-                        const Gap(8),
+                      DialogTextField(
+                        controller: phoneController,
+                        label: 'رقم الهاتف',
+                        icon: Icons.phone_outlined,
+                        keyboardType: TextInputType.phone,
+                      ),
+                      const Gap(8),
 
-                        DialogTextField(
-                          controller: parentPhoneController,
-                          label: 'رقم هاتف ولي الأمر',
-                          icon: Icons.family_restroom_outlined,
-                          keyboardType: TextInputType.phone,
-                        ),
-                        const Gap(8),
+                      DialogTextField(
+                        controller: parentPhoneController,
+                        label: 'رقم هاتف ولي الأمر',
+                        icon: Icons.family_restroom_outlined,
+                        keyboardType: TextInputType.phone,
+                      ),
+                      const Gap(8),
 
-                        DialogTextField(
-                          controller: nearestLandmarkController,
-                          label: 'أقرب نقطة دالة',
-                          icon: Icons.location_on_outlined,
-                        ),
+                      DialogTextField(
+                        controller: nearestLandmarkController,
+                        label: 'أقرب نقطة دالة',
+                        icon: Icons.location_on_outlined,
+                      ),
 
-                        const Gap(16),
+                      const Gap(16),
 
-                        SeactionsTitle(
-                          title: 'المعلومات الدراسية',
-                          icon: Icons.menu_book_outlined,
-                        ),
-                        const Gap(16),
+                      SeactionsTitle(
+                        title: 'المعلومات الدراسية',
+                        icon: Icons.menu_book_outlined,
+                      ),
+                      const Gap(16),
 
-                        DialogTextField(
-                          controller: educationLevelController,
-                          label: 'المستوى الدراسي',
-                          icon: Icons.school_outlined,
-                        ),
-                        const Gap(8),
+                      DialogTextField(
+                        controller: educationLevelController,
+                        label: 'المستوى الدراسي',
+                        icon: Icons.school_outlined,
+                      ),
+                      const Gap(8),
 
-                        DialogTextField(
-                          controller: ageController,
-                          label: 'العمر',
-                          icon: Icons.cake_outlined,
-                          keyboardType: TextInputType.number,
-                        ),
-                      ],
-                    ),
+                      DialogTextField(
+                        controller: ageController,
+                        label: 'العمر',
+                        icon: Icons.cake_outlined,
+                        keyboardType: TextInputType.number,
+                      ),
+                    ],
                   ),
                 ),
               ),
+            ),
 
-              _buildActions(),
-            ],
-          ),
+            _buildActions(),
+          ],
         ),
       ),
     );
@@ -374,6 +370,10 @@ class _AddStudentDialogState extends State<AddStudentDialog> {
               listener: (context, state) {
                 if (state is AddStudentSuccess) {
                   GoRouter.of(context).pop();
+                  // context.read<GetStudentsCubit>().getStudents(
+                  //   managerId: PrefsHelper.getUser()!.id!,
+                  // );
+
                   Snack.show(
                     context,
                     message: 'تمت إضافة الطالب بنجاح',

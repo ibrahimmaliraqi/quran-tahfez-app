@@ -32,6 +32,8 @@ class ApiStudentRemoteImpl implements StudentRemote {
       }
       return StudentModel.fromMap(res['data']['student']);
     } catch (e) {
+      print(" print(e) print(e) print(e) print(e) print(e)");
+      print(e);
       if (e is ServerException) rethrow;
 
       throw ServerException(

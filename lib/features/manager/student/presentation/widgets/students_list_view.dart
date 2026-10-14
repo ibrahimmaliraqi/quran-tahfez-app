@@ -12,7 +12,7 @@ class StudentListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 4,
+      itemCount: students.length,
       itemBuilder: (context, index) {
         return StudentCard(student: students[index]);
       },

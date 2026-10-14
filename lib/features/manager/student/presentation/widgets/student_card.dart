@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quran_tahfez/core/constants/app_colors.dart';
 import 'package:quran_tahfez/core/domain/student/entities/student_entity.dart';
 
 class StudentCard extends StatelessWidget {
@@ -8,11 +9,6 @@ class StudentCard extends StatelessWidget {
     super.key,
     required this.student,
   });
-
-  static const Color primary = Color(0xFF1E6553);
-  static const Color mint = Color(0xFFDDF0E9);
-  static const Color textColor = Color(0xFF2D3748);
-  static const Color muted = Color(0xFF718096);
 
   static const int totalQuranPages = 604;
 
@@ -53,8 +49,8 @@ class StudentCard extends StatelessWidget {
                       name.isEmpty ? 'بدون اسم' : name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: textColor,
+                      style: TextStyle(
+                        color: AppColors.primary,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
@@ -62,7 +58,7 @@ class StudentCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     _infoRow(
                       icon: Icons.school_outlined,
-                      text: 'رقم المدرّس: ${student.teacherId}',
+                      text: 'اسم المدرّس: ${student.teacherName}',
                     ),
                     if (educationLevel.isNotEmpty) ...[
                       const SizedBox(height: 5),
@@ -113,9 +109,9 @@ class StudentCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.auto_stories_rounded,
-                      color: primary,
+                      color: AppColors.primary,
                       size: 21,
                     ),
                     const SizedBox(width: 9),
@@ -123,15 +119,15 @@ class StudentCard extends StatelessWidget {
                       child: Text(
                         'آخر صفحة محفوظة',
                         style: TextStyle(
-                          color: muted,
+                          color: AppColors.muted,
                           fontSize: 12,
                         ),
                       ),
                     ),
                     Text(
                       '$lastPage / $totalQuranPages',
-                      style: const TextStyle(
-                        color: primary,
+                      style: TextStyle(
+                        color: AppColors.primary,
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                       ),
@@ -144,8 +140,10 @@ class StudentCard extends StatelessWidget {
                   child: LinearProgressIndicator(
                     value: progress,
                     minHeight: 7,
-                    backgroundColor: mint,
-                    valueColor: const AlwaysStoppedAnimation<Color>(primary),
+                    backgroundColor: AppColors.mint,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.primary,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 7),
@@ -154,7 +152,7 @@ class StudentCard extends StatelessWidget {
                   child: Text(
                     '${(progress * 100).round()}% مكتمل',
                     style: const TextStyle(
-                      color: muted,
+                      color: AppColors.muted,
                       fontSize: 11,
                     ),
                   ),
@@ -190,13 +188,13 @@ class StudentCard extends StatelessWidget {
       height: 56,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: mint,
+        color: AppColors.mint,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Text(
         name.isNotEmpty ? name.characters.first : 'ط',
-        style: const TextStyle(
-          color: primary,
+        style: TextStyle(
+          color: AppColors.primary,
           fontSize: 23,
           fontWeight: FontWeight.bold,
         ),
@@ -213,7 +211,7 @@ class StudentCard extends StatelessWidget {
         Icon(
           icon,
           size: 16,
-          color: muted,
+          color: AppColors.muted,
         ),
         const SizedBox(width: 7),
         Expanded(
@@ -222,7 +220,7 @@ class StudentCard extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-              color: muted,
+              color: AppColors.muted,
               fontSize: 12,
             ),
           ),

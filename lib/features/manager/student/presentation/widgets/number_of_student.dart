@@ -4,6 +4,7 @@ import 'package:quran_tahfez/core/constants/app_colors.dart';
 class NumberOfStudent extends StatelessWidget {
   final String title;
   final String count;
+
   const NumberOfStudent({
     super.key,
     required this.title,
@@ -18,18 +19,30 @@ class NumberOfStudent extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
-              color: Color(0xFF2D3748),
+              color: Colors.black87,
               fontSize: 19,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
-        Text(
-          count,
-          style: TextStyle(
+        Container(
+          constraints: const BoxConstraints(
+            minWidth: 30,
+            minHeight: 30,
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 7),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
             color: AppColors.primary,
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
+            shape: BoxShape.circle,
+          ),
+          child: Text(
+            count,
+            style: const TextStyle(
+              color: AppColors.mint,
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
       ],
