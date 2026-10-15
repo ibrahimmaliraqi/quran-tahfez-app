@@ -102,9 +102,15 @@ flutter:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
+    - family: "slemane"
+      fonts:
+        - asset: assets/fonts/slemane.ttf
+    - family: "faroq"
+      fonts:
+        - asset: assets/fonts/faroq.ttf
+    - family: "asrar"
+      fonts:
+        - asset: assets/fonts/asrar.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

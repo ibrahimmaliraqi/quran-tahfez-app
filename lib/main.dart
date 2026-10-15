@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       title: 'تحفيظ',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
-        fontFamily: 'Cairo',
+        fontFamily: 'cairo',
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
       routerConfig: AppRouter.router,
