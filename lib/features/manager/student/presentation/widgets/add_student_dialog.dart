@@ -1,3 +1,5 @@
+import 'package:drop_down_list/drop_down_list.dart';
+import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -91,6 +93,7 @@ class _AddStudentDialogState extends State<AddStudentDialog> {
                         icon: Icons.person_outline,
                       ),
                       const Gap(10),
+
                       BlocBuilder<GetTeachersCubit, GetTeachersState>(
                         builder: (context, state) {
                           if (state is GetTeachersSuccess) {
@@ -100,80 +103,40 @@ class _AddStudentDialogState extends State<AddStudentDialog> {
                               return const Text('لا يوجد مدرسون');
                             }
 
-                            return PopupMenuButton<int>(
-                              tooltip: 'اختيار المدرس',
-                              initialValue: selectedTeacherId,
-                              offset: const Offset(0, 55),
-                              constraints: const BoxConstraints(
-                                minWidth: 300,
-                                maxWidth: 400,
-                              ),
-                              color: Colors.white,
-                              elevation: 8,
-                              shadowColor: Colors.black12,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              onSelected: (teacherId) {
-                                final teacher = teachers.firstWhere(
-                                  (teacher) => teacher.id == teacherId,
-                                );
+                            return InkWell(
+                              onTap: () {
+                                DropDownState(
+                                  dropDown: DropDown(
+                                    data: teachers.map((teacher) {
+                                      return SelectedListItem(
+                                        data: teacher.teacherName,
+                                      );
+                                    }).toList(),
+                                    onSelected: (selectedItems) {
+                                      if (selectedItems.isEmpty) return;
 
-                                setState(() {
-                                  selectedTeacherId = teacherId;
-                                  selectedTeacherName = teacher.teacherName;
-                                });
-                              },
-                              itemBuilder: (context) {
-                                return teachers.map((teacher) {
-                                  final isSelected =
-                                      teacher.id == selectedTeacherId;
+                                      final selectedName =
+                                          selectedItems.first.data;
 
-                                  return PopupMenuItem<int>(
-                                    value: teacher.id,
-                                    height: 60,
-                                    child: Row(
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 18,
-                                          backgroundColor: AppColors.primary
-                                              .withValues(
-                                                alpha: 0.1,
-                                              ),
-                                          child: Icon(
-                                            Icons.person_outline,
-                                            color: AppColors.primary,
-                                          ),
-                                        ),
-                                        const Gap(12),
-                                        Expanded(
-                                          child: Text(
-                                            teacher.teacherName,
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: isSelected
-                                                  ? FontWeight.bold
-                                                  : FontWeight.w500,
-                                              color: const Color(0xFF26352C),
-                                            ),
-                                          ),
-                                        ),
-                                        if (isSelected)
-                                          Icon(
-                                            Icons.check_circle,
-                                            color: AppColors.primary,
-                                            size: 20,
-                                          ),
-                                      ],
-                                    ),
-                                  );
-                                }).toList();
+                                      final teacher = teachers.firstWhere(
+                                        (teacher) =>
+                                            teacher.teacherName == selectedName,
+                                      );
+
+                                      setState(() {
+                                        selectedTeacherId = teacher.id;
+                                        selectedTeacherName =
+                                            teacher.teacherName;
+                                      });
+                                    },
+                                  ),
+                                ).showModal(context);
                               },
                               child: Container(
                                 width: double.infinity,
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 14,
-                                  vertical: 14,
+                                  vertical: 16,
                                 ),
                                 decoration: BoxDecoration(
                                   color: const Color(0xFFF8FAF8),
@@ -191,41 +154,23 @@ class _AddStudentDialogState extends State<AddStudentDialog> {
                                     Icon(
                                       Icons.school_outlined,
                                       color: AppColors.primary,
-                                      size: 22,
                                     ),
                                     const Gap(12),
                                     Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          const Text(
-                                            'المدرس المسؤول',
-                                            style: TextStyle(
-                                              color: Color(0xFF849188),
-                                              fontSize: 11,
-                                            ),
-                                          ),
-                                          const Gap(4),
-                                          Text(
-                                            selectedTeacherName ??
-                                                'اضغط لاختيار المدرس',
-                                            style: TextStyle(
-                                              color: selectedTeacherName != null
-                                                  ? const Color(0xFF26352C)
-                                                  : const Color(0xFF849188),
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ],
+                                      child: Text(
+                                        selectedTeacherName ??
+                                            'اضغط لاختيار المدرس',
+                                        style: TextStyle(
+                                          color: selectedTeacherName != null
+                                              ? const Color(0xFF26352C)
+                                              : const Color(0xFF849188),
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
                                     ),
                                     Icon(
                                       Icons.keyboard_arrow_down_rounded,
                                       color: AppColors.primary,
-                                      size: 24,
                                     ),
                                   ],
                                 ),
