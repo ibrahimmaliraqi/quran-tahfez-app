@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:quran_tahfez/core/error/app_exceptions.dart';
 import 'package:quran_tahfez/core/network/dio_client.dart';
 
 abstract class StorageRemote {
@@ -27,10 +28,10 @@ class ApiImgbbImpl implements StorageRemote {
       data: formData,
     );
 
-    if (response.statusCode == 200 && response.data['success'] == true) {
-      return response.data['data']['url'] as String;
+    if (response['success'] == true) {
+      return response['data']['url'] as String;
     }
 
-    throw Exception('فشل رفع الصورة');
+    throw ServerException(errMessage: 'فشل رفع الصورة');
   }
 }

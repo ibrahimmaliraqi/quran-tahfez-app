@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class AddStudentEntity {
   final int? userId;
   final int managerId;
@@ -5,9 +7,10 @@ class AddStudentEntity {
   final String studentName;
   final String email;
   final String phone;
+  final File image;
   final String password;
   final String parentPhone;
-  final String image;
+  final String imageUrl;
   final String nearestLandmark;
   final String educationLevel;
   final int lastPage;
@@ -19,11 +22,12 @@ class AddStudentEntity {
     required this.password,
     required this.managerId,
     required this.teacherId,
+    required this.image,
     required this.studentName,
     required this.email,
     required this.phone,
     required this.parentPhone,
-    required this.image,
+    required this.imageUrl,
     required this.nearestLandmark,
     required this.educationLevel,
     required this.lastPage,

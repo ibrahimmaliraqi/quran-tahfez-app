@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 import 'package:quran_tahfez/core/domain/student/entities/add_student_entity.dart';
 
 class AddStudentModel {
@@ -7,10 +9,11 @@ class AddStudentModel {
   final int teacherId;
   final String studentName;
   final String email;
+  final File image;
   final String phone;
   final String password;
   final String parentPhone;
-  final String image;
+  final String imageUrl;
   final String nearestLandmark;
   final String educationLevel;
   final int lastPage;
@@ -20,13 +23,14 @@ class AddStudentModel {
   AddStudentModel({
     this.userId,
     required this.password,
+    required this.image,
     required this.managerId,
     required this.teacherId,
     required this.studentName,
     required this.email,
     required this.phone,
     required this.parentPhone,
-    required this.image,
+    required this.imageUrl,
     required this.nearestLandmark,
     required this.educationLevel,
     required this.lastPage,
@@ -35,6 +39,7 @@ class AddStudentModel {
   });
   AddStudentEntity toEntity() {
     return AddStudentEntity(
+      image: image,
       userId: userId,
       managerId: managerId,
       teacherId: teacherId,
@@ -43,7 +48,7 @@ class AddStudentModel {
       phone: phone,
       password: password,
       parentPhone: parentPhone,
-      image: image,
+      imageUrl: imageUrl,
       nearestLandmark: nearestLandmark,
       educationLevel: educationLevel,
       lastPage: lastPage,
@@ -54,6 +59,7 @@ class AddStudentModel {
 
   factory AddStudentModel.fromEntity(AddStudentEntity entity) {
     return AddStudentModel(
+      image: entity.image,
       userId: entity.userId,
       managerId: entity.managerId,
       teacherId: entity.teacherId,
@@ -62,7 +68,7 @@ class AddStudentModel {
       phone: entity.phone,
       password: entity.password,
       parentPhone: entity.parentPhone,
-      image: entity.image,
+      imageUrl: entity.imageUrl,
       nearestLandmark: entity.nearestLandmark,
       educationLevel: entity.educationLevel,
       lastPage: entity.lastPage,
@@ -79,7 +85,7 @@ class AddStudentModel {
       'email': email,
       'phone': phone,
       'parent_phone': parentPhone,
-      'image': image,
+      'image': imageUrl,
       'nearest_landmark': nearestLandmark,
       'education_level': educationLevel,
       'last_page': lastPage,
@@ -97,7 +103,8 @@ class AddStudentModel {
     String? phone,
     String? password,
     String? parentPhone,
-    String? image,
+    File? image,
+    String? imageUrl,
     String? nearestLandmark,
     String? educationLevel,
     int? lastPage,
@@ -105,6 +112,7 @@ class AddStudentModel {
     String? createdAt,
   }) {
     return AddStudentModel(
+      image: image ?? File(""),
       userId: userId ?? this.userId,
       managerId: managerId ?? this.managerId,
       teacherId: teacherId ?? this.teacherId,
@@ -113,7 +121,7 @@ class AddStudentModel {
       phone: phone ?? this.phone,
       password: password ?? this.password,
       parentPhone: parentPhone ?? this.parentPhone,
-      image: image ?? this.image,
+      imageUrl: imageUrl ?? this.imageUrl,
       nearestLandmark: nearestLandmark ?? this.nearestLandmark,
       educationLevel: educationLevel ?? this.educationLevel,
       lastPage: lastPage ?? this.lastPage,

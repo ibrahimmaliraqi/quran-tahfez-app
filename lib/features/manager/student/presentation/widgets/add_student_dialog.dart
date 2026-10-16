@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:drop_down_list/drop_down_list.dart';
 import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ import 'package:quran_tahfez/core/service/prefs_helper.dart';
 import 'package:quran_tahfez/core/widgets/custom_button.dart';
 import 'package:quran_tahfez/core/widgets/dialog_text_field.dart';
 import 'package:quran_tahfez/core/widgets/loading.dart';
+import 'package:quran_tahfez/core/widgets/pick_image.dart';
 import 'package:quran_tahfez/core/widgets/seactions_title.dart';
 import 'package:quran_tahfez/core/widgets/snack.dart';
 import 'package:quran_tahfez/features/manager/student/presentation/manager/add_student/add_student_cubit.dart';
@@ -47,6 +50,7 @@ class _AddStudentDialogState extends State<AddStudentDialog> {
   GlobalKey<FormState> vali = GlobalKey();
   int? selectedTeacherId;
   String? selectedTeacherName;
+  File? selectedimage;
   @override
   void dispose() {
     studentNameController.dispose();
@@ -88,6 +92,21 @@ class _AddStudentDialogState extends State<AddStudentDialog> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SeactionsTitle(
+                        title: "اختار صورة للطالب",
+                        icon: Icons.person_outline,
+                      ),
+                      const Gap(10),
+
+                      PickImage(
+                        onFileChanged: (value) {
+                          setState(() {
+                            selectedimage = value;
+                          });
+                        },
+                      ),
+                      const Gap(10),
+
                       SeactionsTitle(
                         title: "اختار المدرس",
                         icon: Icons.person_outline,
@@ -349,6 +368,7 @@ class _AddStudentDialogState extends State<AddStudentDialog> {
                     }
                     if (vali.currentState!.validate()) {
                       AddStudentEntity data = AddStudentEntity(
+                        image: selectedimage ?? File(""),
                         password: passwordController.text,
                         managerId: PrefsHelper.getUser()!.id!,
                         teacherId: selectedTeacherId!,
@@ -356,7 +376,7 @@ class _AddStudentDialogState extends State<AddStudentDialog> {
                         email: emailController.text.trim(),
                         phone: phoneController.text,
                         parentPhone: parentPhoneController.text,
-                        image: "",
+                        imageUrl: "",
                         nearestLandmark: nearestLandmarkController.text,
                         educationLevel: educationLevelController.text,
                         lastPage: 0,

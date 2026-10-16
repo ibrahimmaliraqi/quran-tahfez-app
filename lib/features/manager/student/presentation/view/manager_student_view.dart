@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quran_tahfez/core/domain/storage_repo/storage_repo.dart';
 import 'package:quran_tahfez/core/domain/student/repo/student_repo.dart';
 import 'package:quran_tahfez/core/domain/teacher/repo/teacher_repo.dart';
 import 'package:quran_tahfez/core/functions/open_dialog.dart';
@@ -33,7 +34,10 @@ class _ManagerStudentsViewState extends State<ManagerStudentsView> {
             widget: MultiBlocProvider(
               providers: [
                 BlocProvider.value(
-                  value: AddStudentCubit(studentRepo: getIt.get<StudentRepo>()),
+                  value: AddStudentCubit(
+                    studentRepo: getIt.get<StudentRepo>(),
+                    storageRepo: getIt.get<StorageRepo>(),
+                  ),
                 ),
 
                 BlocProvider(
