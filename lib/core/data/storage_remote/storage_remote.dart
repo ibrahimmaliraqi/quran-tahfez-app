@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:quran_tahfez/core/constants/app_secret.dart';
 import 'package:quran_tahfez/core/error/app_exceptions.dart';
 import 'package:quran_tahfez/core/network/dio_client.dart';
 
@@ -14,7 +15,7 @@ class ApiImgbbImpl implements StorageRemote {
   ApiImgbbImpl({required this.dioClient});
   @override
   Future<String> uploadImage({required File image}) async {
-    const String apiKey = '2f7b358689bab1f6f18d08712310e003';
+    String apiKey = AppSecret.iimguoload;
 
     final formData = FormData.fromMap({
       'image': await MultipartFile.fromFile(image.path),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quran_tahfez/core/constants/app_colors.dart';
 import 'package:quran_tahfez/core/domain/student/entities/student_entity.dart';
+import 'package:quran_tahfez/core/widgets/net_image.dart';
 
 class StudentCard extends StatelessWidget {
   final StudentEntity student;
@@ -191,14 +192,7 @@ class StudentCard extends StatelessWidget {
         color: AppColors.mint,
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Text(
-        name.isNotEmpty ? name.characters.first : 'ط',
-        style: TextStyle(
-          color: AppColors.primary,
-          fontSize: 23,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+      child: NetImage(imageUrl: student.image ?? ''),
     );
   }
 
