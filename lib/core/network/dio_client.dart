@@ -32,10 +32,12 @@ class DioClient {
   Future<dynamic> post(
     String path, {
     dynamic data,
+    Map<String, dynamic>? queryParameters,
   }) async {
     final response = await _dio.post(
       path,
       data: data,
+      queryParameters: queryParameters,
     );
 
     return response.data;
