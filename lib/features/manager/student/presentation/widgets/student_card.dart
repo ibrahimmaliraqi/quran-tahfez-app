@@ -192,7 +192,16 @@ class StudentCard extends StatelessWidget {
         color: AppColors.mint,
         borderRadius: BorderRadius.circular(15),
       ),
-      child: NetImage(imageUrl: student.image ?? ''),
+      child: student.image == null
+          ? Text(
+              name.isNotEmpty ? name.characters.first : 'ط',
+              style: TextStyle(
+                color: AppColors.primary,
+                fontSize: 23,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+          : NetImage(imageUrl: student.image!),
     );
   }
 
