@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quran_tahfez/core/service/prefs_helper.dart';
 
 class ManagerProfileView extends StatelessWidget {
   const ManagerProfileView({super.key});
@@ -486,6 +487,7 @@ class ManagerProfileView extends StatelessWidget {
                   foregroundColor: Colors.white,
                 ),
                 onPressed: () {
+                  PrefsHelper.clearUser();
                   Navigator.pop(dialogContext);
                   _showComingSoon(context);
                 },
