@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quran_tahfez/core/constants/app_colors.dart';
 import 'package:quran_tahfez/core/constants/app_popup_menus.dart';
+import 'package:quran_tahfez/core/constants/enums/popup_menu_action_enum.dart';
 import 'package:quran_tahfez/core/domain/student/entities/student_entity.dart';
 import 'package:quran_tahfez/core/widgets/custom_pop_menu.dart';
 import 'package:quran_tahfez/core/widgets/net_image.dart';
 import 'package:quran_tahfez/core/widgets/snack.dart';
+import 'package:quran_tahfez/features/manager/student/presentation/manager/get_students/get_students_cubit.dart';
 
 class StudentCard extends StatelessWidget {
   final StudentEntity student;
@@ -66,7 +69,14 @@ class StudentCard extends StatelessWidget {
                         CustomPopupMenuButton(
                           items: AppPopupMenus.common,
                           onSelected: (value) {
-                            print(value);
+                            switch (value) {
+                              case PopupMenuActionEnums.delete:
+                                context.read<GetStudentsCubit>().deleteStudent(
+                                  studentId: student.userId,
+                                );
+                                break;
+                              default:
+                            }
                           },
                           value: student.userId,
                         ),

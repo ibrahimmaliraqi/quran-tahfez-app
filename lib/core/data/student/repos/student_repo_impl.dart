@@ -46,4 +46,16 @@ class StudentRepoImpl implements StudentRepo {
       return left(ServerFailure(message: e.errMessage));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> deleteStudent({
+    required int studentId,
+  }) async {
+    try {
+      final res = await studentRemote.deleteStudent(studentId: studentId);
+      return right(res);
+    } on AppExceptions catch (e) {
+      return left(ServerFailure(message: e.errMessage));
+    }
+  }
 }
