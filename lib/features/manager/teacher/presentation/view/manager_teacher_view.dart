@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:quran_tahfez/core/domain/storage_repo/storage_repo.dart';
 import 'package:quran_tahfez/core/domain/teacher/repo/teacher_repo.dart';
 import 'package:quran_tahfez/core/functions/open_dialog.dart';
 import 'package:quran_tahfez/core/service/prefs_helper.dart';
@@ -42,6 +43,7 @@ class ManagerTeachersView extends StatelessWidget {
                       BlocProvider(
                         create: (_) => AddTeacherCubit(
                           teacherRepo: getIt.get<TeacherRepo>(),
+                          storageRepo: getIt.get<StorageRepo>(),
                         ),
                       ),
                       BlocProvider.value(

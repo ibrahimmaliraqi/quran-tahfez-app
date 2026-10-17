@@ -7,6 +7,7 @@ import 'package:quran_tahfez/core/domain/teacher/entities/teacher_entity.dart';
 import 'package:quran_tahfez/core/functions/get_time_ago.dart';
 import 'package:quran_tahfez/core/functions/make_call.dart';
 import 'package:quran_tahfez/core/widgets/custom_pop_menu.dart';
+import 'package:quran_tahfez/core/widgets/net_image.dart';
 import 'package:quran_tahfez/core/widgets/snack.dart';
 import 'package:quran_tahfez/features/manager/teacher/presentation/manager/delete_teacher/delete_teacher_cubit.dart';
 
@@ -35,14 +36,16 @@ class TeacherCard extends StatelessWidget {
               CircleAvatar(
                 radius: 23,
                 backgroundColor: const Color(0xFFDDF0E9),
-                child: Text(
-                  teacher.teacherName.characters.first,
-                  style: const TextStyle(
-                    color: Color(0xFF1E6553),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: teacher.imageUrl == null
+                    ? Text(
+                        teacher.teacherName.characters.first,
+                        style: const TextStyle(
+                          color: Color(0xFF1E6553),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    : NetImage(imageUrl: teacher.imageUrl!),
               ),
               const SizedBox(width: 12),
               Expanded(

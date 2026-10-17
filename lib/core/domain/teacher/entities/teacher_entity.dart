@@ -5,11 +5,13 @@ class TeacherEntity {
   final String teacherName;
   final String email;
   final String phone;
+  final String? imageUrl;
   final bool isActive;
   final String createdAt;
 
   TeacherEntity({
     required this.id,
+    this.imageUrl,
     required this.managerId,
     required this.userId,
     required this.teacherName,
