@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quran_tahfez/core/constants/app_colors.dart';
+import 'package:quran_tahfez/core/constants/app_popup_menus.dart';
 import 'package:quran_tahfez/core/domain/student/entities/student_entity.dart';
+import 'package:quran_tahfez/core/widgets/custom_pop_menu.dart';
 import 'package:quran_tahfez/core/widgets/net_image.dart';
 
 class StudentCard extends StatelessWidget {
@@ -46,15 +48,27 @@ class StudentCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      name.isEmpty ? 'بدون اسم' : name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: AppColors.primary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          name.isEmpty ? 'بدون اسم' : name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Spacer(),
+                        CustomPopupMenuButton(
+                          items: AppPopupMenus.common,
+                          onSelected: (value) {
+                            print(value);
+                          },
+                          value: student.userId,
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 6),
                     _infoRow(
