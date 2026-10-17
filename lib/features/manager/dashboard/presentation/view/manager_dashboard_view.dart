@@ -14,9 +14,7 @@ class _ManagerDashboardViewState extends State<ManagerDashboardView>
     with SingleTickerProviderStateMixin {
   static const _bg = Color(0xFFF5F7F3);
   static const _ink = Color(0xFF1F342B);
-  static const _muted = Color(0xFF8A978F);
   static const _gold = Color(0xFFD9B66B);
-  static const _goldLight = Color(0xFFF2DDA4);
 
   static const _statsHeight = 112.0;
   static const _overlap = 56.0;

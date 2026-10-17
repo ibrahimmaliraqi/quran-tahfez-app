@@ -8,7 +8,6 @@ import 'package:quran_tahfez/core/constants/app_string.dart';
 import 'package:quran_tahfez/core/domain/teacher/entities/add_teacher_entity.dart';
 import 'package:quran_tahfez/core/service/prefs_helper.dart';
 import 'package:quran_tahfez/core/widgets/custom_button.dart';
-import 'package:quran_tahfez/core/widgets/dialog_label.dart';
 import 'package:quran_tahfez/core/widgets/dialog_text_field.dart';
 import 'package:quran_tahfez/core/widgets/loading.dart';
 import 'package:quran_tahfez/core/widgets/pick_image.dart';
@@ -32,8 +31,6 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  bool obscurePassword = true;
-
   @override
   void dispose() {
     nameController.dispose();
@@ -45,16 +42,17 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final primary = AppColors.primary;
+
     return AlertDialog(
       backgroundColor: Colors.white,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 20),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      titlePadding: const EdgeInsets.fromLTRB(20, 22, 20, 8),
-      contentPadding: const EdgeInsets.fromLTRB(20, 12, 20, 10),
-      actionsPadding: const EdgeInsets.fromLTRB(20, 0, 20, 18),
-      title: const DialogLabel(),
+      surfaceTintColor: Colors.transparent,
+      insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      titlePadding: const EdgeInsets.fromLTRB(22, 24, 22, 6),
+      contentPadding: const EdgeInsets.fromLTRB(22, 14, 22, 8),
+      actionsPadding: const EdgeInsets.fromLTRB(22, 8, 22, 22),
+      title: const _DialogHeader(),
       content: SizedBox(
         width: 400,
         child: SingleChildScrollView(
@@ -65,21 +63,16 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
               children: [
                 PickImage(
                   onFileChanged: (value) {
-                    setState(() {
-                      image = value;
-                      print(image);
-                    });
+                    setState(() => image = value);
                   },
                 ),
-                const Gap(14),
-
+                const Gap(16),
                 DialogTextField(
                   controller: nameController,
                   label: 'اسم المعلم',
                   icon: Icons.person_outline_rounded,
                 ),
                 const Gap(14),
-
                 DialogTextField(
                   controller: phoneController,
                   label: 'رقم الهاتف',
@@ -87,7 +80,6 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                   keyboardType: TextInputType.phone,
                 ),
                 const Gap(14),
-
                 DialogTextField(
                   controller: emailController,
                   label: 'البريد الإلكتروني',
@@ -95,7 +87,6 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                   keyboardType: TextInputType.emailAddress,
                 ),
                 const Gap(14),
-
                 DialogTextField(
                   controller: passwordController,
                   label: 'كلمة المرور',
@@ -111,12 +102,19 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
           children: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(
-                'إلغاء',
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.bold,
+              style: TextButton.styleFrom(
+                foregroundColor: primary,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 14,
                 ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              child: const Text(
+                'إلغاء',
+                style: TextStyle(fontWeight: FontWeight.w700),
               ),
             ),
             const Gap(12),
@@ -132,10 +130,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
 
                     Navigator.of(context).pop();
 
-                    Snack.show(
-                      context,
-                      message: 'تمت إضافة المعلم بنجاح',
-                    );
+                    Snack.show(context, message: 'تمت إضافة المعلم بنجاح');
                   }
 
                   if (state is AddTeacherFailure) {
@@ -148,9 +143,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                 },
                 builder: (context, state) {
                   if (state is AddTeacherLoading) {
-                    return const Center(
-                      child: Loading(),
-                    );
+                    return const Center(child: Loading());
                   }
 
                   return CustomButton(
@@ -186,6 +179,68 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
               ),
             ),
           ],
+        ),
+      ],
+    );
+  }
+}
+
+class _DialogHeader extends StatelessWidget {
+  const _DialogHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    final primary = AppColors.primary;
+
+    return Row(
+      children: [
+        Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Color.lerp(primary, Colors.white, 0.10)!,
+                Color.lerp(primary, Colors.black, 0.30)!,
+              ],
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: primary.withValues(alpha: 0.30),
+                blurRadius: 12,
+                offset: const Offset(0, 5),
+              ),
+            ],
+          ),
+          child: const Icon(
+            Icons.person_add_alt_1_rounded,
+            color: Colors.white,
+            size: 25,
+          ),
+        ),
+        const SizedBox(width: 14),
+        const Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'إضافة معلم جديد',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xFF1F342B),
+                ),
+              ),
+              SizedBox(height: 3),
+              Text(
+                'أدخل بيانات المعلم',
+                style: TextStyle(fontSize: 12.5, color: Color(0xFF8A978F)),
+              ),
+            ],
+          ),
         ),
       ],
     );

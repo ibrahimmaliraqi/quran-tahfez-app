@@ -44,14 +44,9 @@ class ManagerTeachersViewBody extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: TeachersSearchField(),
           ),
-          Gap(15),
 
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-
-              child: ManagerTeachersListBloc(),
-            ),
+            child: ManagerTeachersListBloc(),
           ),
         ],
       ),
