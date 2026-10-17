@@ -26,7 +26,7 @@ class AppRouter {
             Navigator.of(context).pushReplacement(
               PageRouteBuilder(
                 transitionDuration: const Duration(milliseconds: 600),
-                pageBuilder: (_, __, ___) => const ManagerDashboardView(),
+                pageBuilder: (_, __, ___) => const ManagerRootView(),
                 transitionsBuilder: (_, animation, __, child) =>
                     FadeTransition(opacity: animation, child: child),
               ),
