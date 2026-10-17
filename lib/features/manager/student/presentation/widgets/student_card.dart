@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:quran_tahfez/core/constants/app_colors.dart';
 import 'package:quran_tahfez/core/constants/app_popup_menus.dart';
 import 'package:quran_tahfez/core/domain/student/entities/student_entity.dart';
 import 'package:quran_tahfez/core/widgets/custom_pop_menu.dart';
 import 'package:quran_tahfez/core/widgets/net_image.dart';
+import 'package:quran_tahfez/core/widgets/snack.dart';
 
 class StudentCard extends StatelessWidget {
   final StudentEntity student;
@@ -73,11 +75,13 @@ class StudentCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     _infoRow(
                       icon: Icons.school_outlined,
+                      context: context,
                       text: 'اسم المدرّس: ${student.teacherName}',
                     ),
                     if (educationLevel.isNotEmpty) ...[
                       const SizedBox(height: 5),
                       _infoRow(
+                        context: context,
                         icon: Icons.menu_book_outlined,
                         text: educationLevel,
                       ),
@@ -98,7 +102,9 @@ class StudentCard extends StatelessWidget {
 
             if (phone.isNotEmpty)
               _infoRow(
+                copyable: true,
                 icon: Icons.phone_outlined,
+                context: context,
                 text: phone,
               ),
 
@@ -106,6 +112,8 @@ class StudentCard extends StatelessWidget {
 
             if (email.isNotEmpty)
               _infoRow(
+                copyable: true,
+                context: context,
                 icon: Icons.email_outlined,
                 text: email,
               ),
@@ -220,8 +228,10 @@ class StudentCard extends StatelessWidget {
   }
 
   Widget _infoRow({
+    required BuildContext context,
     required IconData icon,
     required String text,
+    bool copyable = false,
   }) {
     return Row(
       children: [
@@ -242,6 +252,34 @@ class StudentCard extends StatelessWidget {
             ),
           ),
         ),
+        if (copyable)
+          IconButton(
+            onPressed: () async {
+              await Clipboard.setData(
+                ClipboardData(text: text),
+              );
+
+              if (!context.mounted) return;
+              Snack.show(
+                context,
+                message: icon == Icons.phone_outlined
+                    ? 'تم نسخ رقم الهاتف'
+                    : 'تم نسخ البريد الإلكتروني',
+              );
+            },
+            icon: const Icon(
+              Icons.copy_rounded,
+              size: 17,
+            ),
+            color: AppColors.primary,
+            tooltip: 'نسخ',
+            visualDensity: VisualDensity.compact,
+            constraints: const BoxConstraints(
+              minWidth: 32,
+              minHeight: 32,
+            ),
+            padding: EdgeInsets.zero,
+          ),
       ],
     );
   }

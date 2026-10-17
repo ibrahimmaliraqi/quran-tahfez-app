@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quran_tahfez/core/constants/app_popup_menus.dart';
+import 'package:quran_tahfez/core/constants/enums/popup_menu_action_enum.dart';
 import 'package:quran_tahfez/core/domain/teacher/entities/teacher_entity.dart';
-import 'package:quran_tahfez/core/domain/teacher/enums/taecher_enum.dart';
 import 'package:quran_tahfez/core/functions/get_time_ago.dart';
+import 'package:quran_tahfez/core/functions/make_call.dart';
+import 'package:quran_tahfez/core/widgets/custom_pop_menu.dart';
+import 'package:quran_tahfez/core/widgets/snack.dart';
 import 'package:quran_tahfez/features/manager/teacher/presentation/manager/delete_teacher/delete_teacher_cubit.dart';
 
 class TeacherCard extends StatelessWidget {
@@ -57,64 +62,41 @@ class TeacherCard extends StatelessWidget {
                           ),
                         ),
                         Spacer(),
-
-                        PopupMenuButton<TeacherEnumAction>(
-                          color: Colors.white,
-                          icon: const Icon(Icons.more_vert),
-                          onSelected: (action) {
-                            switch (action) {
-                              case TeacherEnumAction.edit:
-                                debugPrint(
-                                  'edit teacher: ${teacher.teacherName}',
-                                );
-                                break;
-
-                              case TeacherEnumAction.delete:
+                        CustomPopupMenuButton(
+                          items: AppPopupMenus.common,
+                          onSelected: (value) {
+                            switch (value) {
+                              case PopupMenuActionEnums.delete:
                                 context
                                     .read<DeleteTeacherCubit>()
                                     .deleteTeacher(teacherId: teacher.userId);
+
                                 break;
+                              default:
                             }
                           },
-                          itemBuilder: (context) =>
-                              TeacherEnumAction.values.map((action) {
-                                return PopupMenuItem<TeacherEnumAction>(
-                                  value: action,
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        action.icon,
-                                        color: action.color,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text(action.title),
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
+                          value: teacher.userId,
                         ),
                       ],
                     ),
                     const SizedBox(height: 5),
-                    Text(
-                      "الايميل: ${teacher.email}",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: Color(0xFF718096),
-                        fontSize: 12,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      "رقم الهاتف: ${teacher.phone}",
+                    _copyableInfo(
+                      canCall: true,
 
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: Color(0xFF718096),
-                        fontSize: 12,
-                      ),
+                      context: context,
+                      label: 'الإيميل',
+                      value: teacher.email,
+                      icon: Icons.email_outlined,
+                    ),
+
+                    const SizedBox(height: 5),
+
+                    _copyableInfo(
+                      canCall: true,
+                      context: context,
+                      label: 'رقم الهاتف',
+                      value: teacher.phone,
+                      icon: Icons.phone_outlined,
                     ),
                   ],
                 ),
@@ -172,4 +154,89 @@ class AppPopupMenuAction<T> {
     required this.icon,
     this.color,
   });
+}
+
+Widget _copyableInfo({
+  required BuildContext context,
+  required String label,
+  required String value,
+  required IconData icon,
+  bool canCall = false,
+}) {
+  return Row(
+    children: [
+      Icon(
+        icon,
+        size: 15,
+        color: const Color(0xFF718096),
+      ),
+      const SizedBox(width: 6),
+      Text(
+        '$label: ',
+        style: const TextStyle(
+          color: Color(0xFF718096),
+          fontSize: 12,
+        ),
+      ),
+      Expanded(
+        child: Text(
+          value.isEmpty ? 'غير متوفر' : value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            color: Color(0xFF718096),
+            fontSize: 12,
+          ),
+        ),
+      ),
+
+      if (value.trim().isNotEmpty) ...[
+        // نسخ
+        IconButton(
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints(
+            minWidth: 30,
+            minHeight: 30,
+          ),
+          tooltip: 'نسخ',
+          icon: const Icon(
+            Icons.copy_rounded,
+            size: 15,
+            color: Color(0xFF1E6553),
+          ),
+          onPressed: () async {
+            await Clipboard.setData(
+              ClipboardData(text: value),
+            );
+
+            if (!context.mounted) return;
+
+            Snack.show(
+              context,
+              message: 'تم نسخ $label بنجاح',
+            );
+          },
+        ),
+
+        // اتصال
+        if (canCall)
+          IconButton(
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(
+              minWidth: 30,
+              minHeight: 30,
+            ),
+            tooltip: 'اتصال',
+            icon: const Icon(
+              Icons.call_rounded,
+              size: 17,
+              color: Color(0xFF1E6553),
+            ),
+            onPressed: () async {
+              await makePhoneCall(context, phone: label);
+            },
+          ),
+      ],
+    ],
+  );
 }
