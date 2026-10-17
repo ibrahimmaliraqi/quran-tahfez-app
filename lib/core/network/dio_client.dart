@@ -9,7 +9,7 @@ class DioClient {
           validateStatus: (status) {
             return status != null && status < 500;
           },
-          baseUrl: "http://hifzquran.mywebcommunity.org/",
+          baseUrl: "https://qurantahfez.whf.bz/",
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',

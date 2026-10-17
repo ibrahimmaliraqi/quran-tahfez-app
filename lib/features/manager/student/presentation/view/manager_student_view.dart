@@ -12,55 +12,75 @@ import 'package:quran_tahfez/features/manager/student/presentation/widgets/add_s
 import 'package:quran_tahfez/features/manager/student/presentation/widgets/manager_student_view_body.dart';
 import 'package:quran_tahfez/features/manager/teacher/presentation/manager/get_teachers/get_teachers_cubit.dart';
 
-class ManagerStudentsView extends StatefulWidget {
+class ManagerStudentsView extends StatelessWidget {
   const ManagerStudentsView({super.key});
 
   @override
-  State<ManagerStudentsView> createState() => _ManagerStudentsViewState();
-}
-
-class _ManagerStudentsViewState extends State<ManagerStudentsView> {
-  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          GetStudentsCubit(studentRepo: getIt.get<StudentRepo>())
-            ..getStudents(managerId: PrefsHelper.getUser()!.id!),
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton.extended(
-          heroTag: "add_student",
-          onPressed: () async => openDialog(
-            context,
-            widget: MultiBlocProvider(
-              providers: [
-                BlocProvider.value(
-                  value: AddStudentCubit(
-                    studentRepo: getIt.get<StudentRepo>(),
-                    storageRepo: getIt.get<StorageRepo>(),
-                  ),
-                ),
+    final managerId = PrefsHelper.getUser()!.id!;
 
-                BlocProvider(
-                  create: (context) =>
-                      GetTeachersCubit(teacherRepo: getIt.get<TeacherRepo>())
-                        ..getTeachers(managerId: PrefsHelper.getUser()!.id!),
-                ),
-              ],
-              child: AddStudentDialog(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => GetStudentsCubit(
+            studentRepo: getIt.get<StudentRepo>(),
+          )..getStudents(managerId: managerId),
+        ),
+        BlocProvider(
+          create: (_) => AddStudentCubit(
+            studentRepo: getIt.get<StudentRepo>(),
+            storageRepo: getIt.get<StorageRepo>(),
+          ),
+        ),
+      ],
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            floatingActionButton: FloatingActionButton.extended(
+              heroTag: 'add_student',
+              onPressed: () {
+                final addStudentCubit = context.read<AddStudentCubit>();
+
+                openDialog(
+                  context,
+                  widget: MultiBlocProvider(
+                    providers: [
+                      BlocProvider.value(
+                        value: addStudentCubit,
+                      ),
+                      BlocProvider(
+                        create: (_) => GetTeachersCubit(
+                          teacherRepo: getIt.get<TeacherRepo>(),
+                        )..getTeachers(managerId: managerId),
+                      ),
+                    ],
+                    child: const AddStudentDialog(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.add),
+              label: const Text(
+                'إضافة طالب',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              backgroundColor: const Color(0xFF1E6553),
+              foregroundColor: Colors.white,
+              elevation: 2,
             ),
-          ),
-          icon: const Icon(Icons.add),
-          label: const Text(
-            'إضافة طالب',
-            style: TextStyle(fontWeight: FontWeight.w600),
-          ),
-          backgroundColor: const Color(0xFF1E6553),
-          foregroundColor: Colors.white,
-          elevation: 2,
-        ),
-        body: SafeArea(
-          child: ManagerStudentViewBody(),
-        ),
+            body: SafeArea(
+              child: BlocListener<AddStudentCubit, AddStudentState>(
+                listener: (context, state) {
+                  if (state is AddStudentSuccess) {
+                    context.read<GetStudentsCubit>().getStudents(
+                      managerId: managerId,
+                    );
+                  }
+                },
+                child: const ManagerStudentViewBody(),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

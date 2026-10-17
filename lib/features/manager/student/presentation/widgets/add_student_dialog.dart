@@ -334,10 +334,6 @@ class _AddStudentDialogState extends State<AddStudentDialog> {
               listener: (context, state) {
                 if (state is AddStudentSuccess) {
                   GoRouter.of(context).pop();
-                  // context.read<GetStudentsCubit>().getStudents(
-                  //   managerId: PrefsHelper.getUser()!.id!,
-                  // );
-
                   Snack.show(
                     context,
                     message: 'تمت إضافة الطالب بنجاح',
