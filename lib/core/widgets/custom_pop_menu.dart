@@ -28,7 +28,7 @@ class CustomPopupMenuButton<T> extends StatelessWidget {
     this.icon,
     this.iconSize = 24,
     this.iconColor,
-    required int value,
+    required String value,
   });
 
   @override

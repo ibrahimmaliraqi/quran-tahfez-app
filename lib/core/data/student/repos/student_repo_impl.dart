@@ -51,7 +51,7 @@ class StudentRepoImpl implements StudentRepo {
 
   @override
   Future<Either<Failure, String>> deleteStudent({
-    required int studentId,
+    required String studentId,
   }) async {
     try {
       final res = await studentRemote.deleteStudent(studentId: studentId);

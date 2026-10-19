@@ -35,7 +35,7 @@ class GetStudentsCubit extends Cubit<GetStudentsState> {
     );
   }
 
-  Future<void> deleteStudent({required int studentId}) async {
+  Future<void> deleteStudent({required String studentId}) async {
     emit(GetStudentsLoading());
 
     final result = await studentRepo.deleteStudent(

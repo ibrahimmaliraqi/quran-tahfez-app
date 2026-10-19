@@ -1,9 +1,9 @@
 class StudentEntity {
   final int id;
-  final int managerId;
-  final int teacherId;
+  final String managerId;
+  final String teacherId;
   final String? teacherName;
-  final int userId;
+  final String userId;
   final String studentName;
   final String email;
   final String phone;

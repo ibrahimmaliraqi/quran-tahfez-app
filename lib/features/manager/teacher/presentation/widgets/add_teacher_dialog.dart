@@ -26,10 +26,10 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
   File? image;
   final formKey = GlobalKey<FormState>();
 
-  final nameController = TextEditingController();
-  final phoneController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final nameController = TextEditingController(text: "ابراهيم");
+  final phoneController = TextEditingController(text: "07706958473");
+  final emailController = TextEditingController(text: "ddsffdsfdsf@gmail.com");
+  final passwordController = TextEditingController(text: "07700770");
 
   @override
   void dispose() {
@@ -134,6 +134,9 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                   }
 
                   if (state is AddTeacherFailure) {
+                    Navigator.of(context).pop();
+                    print(state.errMessage);
+
                     Snack.show(
                       context,
                       message: state.errMessage,

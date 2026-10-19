@@ -2,10 +2,10 @@ import 'package:quran_tahfez/core/domain/student/entities/student_entity.dart';
 
 class StudentModel {
   final int id;
-  final int managerId;
-  final int teacherId;
+  final String managerId;
+  final String teacherId;
   final String? teacherName;
-  final int userId;
+  final String userId;
   final String studentName;
   final String email;
   final String phone;
@@ -37,9 +37,9 @@ class StudentModel {
     return StudentModel(
       teacherName: json['teacher_name'],
       id: json['id'] as int,
-      managerId: json['manager_id'] as int,
-      teacherId: json['teacher_id'] as int,
-      userId: json['user_id'] as int,
+      managerId: json['manager_id'] as String,
+      teacherId: json['teacher_id'] as String,
+      userId: json['user_id'] as String,
       studentName: json['student_name'] as String,
       email: json['email'] as String,
       phone: json['phone'] as String,

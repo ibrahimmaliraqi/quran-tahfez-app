@@ -11,6 +11,6 @@ abstract class TeacherRepo {
     required String managerId,
   });
   Future<Either<Failure, String>> deleteTeacher({
-    required int teacherId,
+    required String teacherId,
   });
 }

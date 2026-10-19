@@ -7,6 +7,7 @@ class AddTeacherModel {
   final String teacherName;
   final String email;
   final String password;
+  final String? userId;
   final String managerId;
   final String phone;
   final String? imageUrl;
@@ -14,6 +15,7 @@ class AddTeacherModel {
   final String createdAt;
   AddTeacherModel({
     required this.imageUrl,
+    this.userId,
     required this.teacherName,
     required this.email,
     this.image,
@@ -24,6 +26,7 @@ class AddTeacherModel {
   });
   AddTeacherEntity toEntity() {
     return AddTeacherEntity(
+      userId: userId,
       teacherName: teacherName,
       email: email,
       imageUrl: imageUrl,
@@ -39,10 +42,11 @@ class AddTeacherModel {
     return <String, dynamic>{
       'teacher_name': teacherName,
       'email': email,
-      'password': password,
+      // 'password': password,
       'manager_id': managerId,
       'phone': phone,
       'image_url': imageUrl,
+      'user_id': userId,
       'created_at': createdAt,
     };
   }
@@ -51,6 +55,7 @@ class AddTeacherModel {
     return AddTeacherModel(
       imageUrl: entity.imageUrl,
       image: entity.image,
+      userId: entity.userId,
       createdAt: entity.createdAt,
       teacherName: entity.teacherName,
 
@@ -68,11 +73,13 @@ class AddTeacherModel {
     String? managerId,
     String? phone,
     String? imageUrl,
+    String? userId,
     File? image,
     String? createdAt,
   }) {
     return AddTeacherModel(
-      imageUrl: imageUrl ?? this.teacherName,
+      userId: userId ?? this.userId,
+      imageUrl: imageUrl ?? this.imageUrl,
       teacherName: teacherName ?? this.teacherName,
       email: email ?? this.email,
       password: password ?? this.password,

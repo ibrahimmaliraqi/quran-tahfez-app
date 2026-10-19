@@ -3,8 +3,8 @@ import 'package:quran_tahfez/core/domain/teacher/entities/teacher_entity.dart';
 
 class TeacherModel {
   final int id;
-  final int managerId;
-  final int userId;
+  final String managerId;
+  final String userId;
   final String teacherName;
   final String email;
   final String? imageUrl;
@@ -80,8 +80,8 @@ class TeacherModel {
 
   TeacherModel copyWith({
     int? id,
-    int? managerId,
-    int? userId,
+    String? managerId,
+    String? userId,
     String? teacherName,
     String? email,
     String? imageUrl,

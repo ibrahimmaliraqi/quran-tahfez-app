@@ -3,8 +3,8 @@ import 'package:quran_tahfez/core/domain/teacher/entities/teacher_entity.dart';
 final List<TeacherEntity> demoTeachers = [
   TeacherEntity(
     id: 1,
-    managerId: 1,
-    userId: 101,
+    managerId: "1",
+    userId: "102",
     teacherName: 'أحمد محمد',
     email: 'ahmed@example.com',
     phone: '07701234567',
@@ -13,8 +13,8 @@ final List<TeacherEntity> demoTeachers = [
   ),
   TeacherEntity(
     id: 2,
-    managerId: 1,
-    userId: 102,
+    managerId: "1",
+    userId: "102",
     teacherName: 'علي حسن',
     email: 'ali@example.com',
     phone: '07712345678',
@@ -23,8 +23,8 @@ final List<TeacherEntity> demoTeachers = [
   ),
   TeacherEntity(
     id: 3,
-    managerId: 1,
-    userId: 103,
+    managerId: "1",
+    userId: "102",
     teacherName: 'مصطفى أحمد',
     email: 'mustafa@example.com',
     phone: '07801234567',
@@ -33,8 +33,8 @@ final List<TeacherEntity> demoTeachers = [
   ),
   TeacherEntity(
     id: 4,
-    managerId: 1,
-    userId: 104,
+    managerId: "1",
+    userId: "102",
     teacherName: 'عمر إبراهيم',
     email: 'omar@example.com',
     phone: '07812345678',
@@ -43,8 +43,8 @@ final List<TeacherEntity> demoTeachers = [
   ),
   TeacherEntity(
     id: 5,
-    managerId: 1,
-    userId: 105,
+    managerId: "1",
+    userId: "102",
     teacherName: 'عبد الرحمن خالد',
     email: 'abdulrahman@example.com',
     phone: '07501234567',

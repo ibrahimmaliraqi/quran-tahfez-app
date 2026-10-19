@@ -7,6 +7,7 @@ import 'package:quran_tahfez/core/domain/teacher/repo/teacher_repo.dart';
 import 'package:quran_tahfez/core/functions/open_dialog.dart';
 import 'package:quran_tahfez/core/service/prefs_helper.dart';
 import 'package:quran_tahfez/core/service/server_locator.dart';
+import 'package:quran_tahfez/features/auth/domain/repositories/auth_repo.dart';
 import 'package:quran_tahfez/features/manager/teacher/presentation/manager/add_teacher/add_teacher_cubit.dart';
 import 'package:quran_tahfez/features/manager/teacher/presentation/manager/delete_teacher/delete_teacher_cubit.dart';
 import 'package:quran_tahfez/features/manager/teacher/presentation/manager/get_teachers/get_teachers_cubit.dart';
@@ -56,6 +57,7 @@ class ManagerTeachersView extends StatelessWidget {
                       providers: [
                         BlocProvider(
                           create: (_) => AddTeacherCubit(
+                            authRepo: getIt.get<AuthRepo>(),
                             teacherRepo: getIt.get<TeacherRepo>(),
                             storageRepo: getIt.get<StorageRepo>(),
                           ),

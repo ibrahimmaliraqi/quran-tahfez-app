@@ -5,6 +5,7 @@ class AddTeacherEntity {
   final String email;
   final String password;
   final String managerId;
+  final String? userId;
   final String phone;
   final File? image;
   final String? imageUrl;
@@ -13,6 +14,7 @@ class AddTeacherEntity {
 
   AddTeacherEntity({
     required this.teacherName,
+    this.userId,
     this.image,
     required this.email,
     this.imageUrl,

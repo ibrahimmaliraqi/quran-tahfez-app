@@ -3,6 +3,7 @@ import 'package:quran_tahfez/core/data/teacher/model/teacher_model.dart';
 import 'package:quran_tahfez/core/error/app_exceptions.dart';
 import 'package:quran_tahfez/core/network/dio_client.dart';
 import 'package:quran_tahfez/main.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class TeacherRemote {
   Future<void> addTeacher({
@@ -12,7 +13,7 @@ abstract class TeacherRemote {
     required String managerId,
   });
   Future<String> deleteTeacher({
-    required int teacherId,
+    required String teacherId,
   });
 }
 
@@ -75,7 +76,7 @@ class ApiTeacherRemoteImpl implements TeacherRemote {
   }
 
   @override
-  Future<String> deleteTeacher({required int teacherId}) async {
+  Future<String> deleteTeacher({required String teacherId}) async {
     try {
       final res = await dioClient.post(
         "teachers/delete_teacher.php",
@@ -100,22 +101,33 @@ class ApiTeacherRemoteImpl implements TeacherRemote {
 }
 
 class SupabaseTeacherRemoteImpl implements TeacherRemote {
-  @override
-  Future<void> addTeacher({required AddTeacherModel data}) async {
-    try {
-      await supabase.from("teachers").insert(data);
-    } catch (e) {
-      throw ServerException(errMessage: "فشل في اضافة المعلم");
+  String getExceptionMessage({required PostgrestException data}) {
+    switch (data.code) {
+      case "PGRST204":
+        return 'تعذر إضافة المعلم.';
+      default:
+        print(data.code);
+        print(data.message);
+        return " ${data.message}حدث خطاااا";
     }
   }
 
   @override
-  Future<String> deleteTeacher({required int teacherId}) async {
+  Future<void> addTeacher({required AddTeacherModel data}) async {
+    try {
+      await supabase.from("teachers").insert(data.toMap());
+    } on PostgrestException catch (e) {
+      throw ServerException(errMessage: getExceptionMessage(data: e));
+    }
+  }
+
+  @override
+  Future<String> deleteTeacher({required String teacherId}) async {
     try {
       await supabase.from("users").delete().eq("id", teacherId);
       return "تم حذف المعلم بنجاح";
-    } catch (e) {
-      throw ServerException(errMessage: "فشل في حذف المعلم");
+    } on PostgrestException catch (e) {
+      throw ServerException(errMessage: getExceptionMessage(data: e));
     }
   }
 
@@ -125,9 +137,12 @@ class SupabaseTeacherRemoteImpl implements TeacherRemote {
       final res = await supabase
           .from("teachers")
           .select()
-          .eq("manager_id", managerId);
+          .eq("manager_id", managerId)
+          .order("created_at", ascending: false);
       return res.map((teacher) => TeacherModel.fromMap(teacher)).toList();
     } catch (e) {
+      print("e.toString()");
+      print(e.toString());
       throw ServerException(errMessage: "فشل في جلب المعلمين");
     }
   }

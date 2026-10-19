@@ -39,7 +39,7 @@ class TeacherRepoImpl implements TeacherRepo {
 
   @override
   Future<Either<Failure, String>> deleteTeacher({
-    required int teacherId,
+    required String teacherId,
   }) async {
     try {
       final res = await teacherRemote.deleteTeacher(teacherId: teacherId);

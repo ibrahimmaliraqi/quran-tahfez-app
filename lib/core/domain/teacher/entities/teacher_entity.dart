@@ -1,7 +1,7 @@
 class TeacherEntity {
   final int id;
-  final int managerId;
-  final int userId;
+  final String managerId;
+  final String userId;
   final String teacherName;
   final String email;
   final String phone;

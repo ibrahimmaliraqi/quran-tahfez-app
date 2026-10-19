@@ -13,7 +13,7 @@ class DeleteTeacherCubit extends Cubit<DeleteTeacherState> {
   }) : super(DeleteTeacherInitial());
 
   Future<void> deleteTeacher({
-    required int teacherId,
+    required String teacherId,
   }) async {
     emit(DeleteTeacherLoading());
 
