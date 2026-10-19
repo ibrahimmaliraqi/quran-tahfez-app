@@ -25,7 +25,7 @@ class ManagerStudentsView extends StatelessWidget {
         BlocProvider(
           create: (_) => GetStudentsCubit(
             studentRepo: getIt.get<StudentRepo>(),
-          )..getStudents(managerId: int.parse(managerId)),
+          )..getStudents(managerId: managerId),
         ),
         BlocProvider(
           create: (_) => AddStudentCubit(
@@ -64,7 +64,7 @@ class ManagerStudentsView extends StatelessWidget {
                         BlocProvider(
                           create: (_) => GetTeachersCubit(
                             teacherRepo: getIt.get<TeacherRepo>(),
-                          )..getTeachers(managerId: int.parse(managerId)),
+                          )..getTeachers(managerId: managerId),
                         ),
                       ],
                       child: const AddStudentDialog(),
@@ -90,7 +90,7 @@ class ManagerStudentsView extends StatelessWidget {
                 listener: (context, state) {
                   if (state is AddStudentSuccess) {
                     context.read<GetStudentsCubit>().getStudents(
-                      managerId: int.parse(managerId),
+                      managerId: managerId,
                     );
                   }
                 },

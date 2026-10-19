@@ -125,7 +125,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                     final managerId = PrefsHelper.getUser()!.id!;
 
                     context.read<GetTeachersCubit>().getTeachers(
-                      managerId: int.parse(managerId),
+                      managerId: managerId,
                     );
 
                     Navigator.of(context).pop();
@@ -166,7 +166,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                         data: AddTeacherEntity(
                           createdAt: AppString.currentTime,
                           email: emailController.text.trim(),
-                          managerId: int.parse(user!.id!),
+                          managerId: user!.id!,
                           image: image,
                           password: passwordController.text,
                           phone: phoneController.text.trim(),

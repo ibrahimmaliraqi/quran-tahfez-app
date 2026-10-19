@@ -8,7 +8,7 @@ abstract class StudentRemote {
     required AddStudentModel data,
   });
   Future<List<StudentModel>> getStudents({
-    required int managerId,
+    required String managerId,
   });
   Future<String> deleteStudent({
     required int studentId,
@@ -46,7 +46,7 @@ class ApiStudentRemoteImpl implements StudentRemote {
   }
 
   @override
-  Future<List<StudentModel>> getStudents({required int managerId}) async {
+  Future<List<StudentModel>> getStudents({required String managerId}) async {
     try {
       final res = await dioClient.post(
         "students/get_students.php",

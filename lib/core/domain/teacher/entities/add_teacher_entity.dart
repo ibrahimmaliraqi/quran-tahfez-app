@@ -4,7 +4,7 @@ class AddTeacherEntity {
   final String teacherName;
   final String email;
   final String password;
-  final int managerId;
+  final String managerId;
   final String phone;
   final File? image;
   final String? imageUrl;

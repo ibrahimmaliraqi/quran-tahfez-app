@@ -10,7 +10,7 @@ class GetTeachersCubit extends Cubit<GetTeachersState> {
 
   GetTeachersCubit({required this.teacherRepo}) : super(GetTeachersInitial());
 
-  Future<void> getTeachers({required int managerId}) async {
+  Future<void> getTeachers({required String managerId}) async {
     emit(GetTeachersLoading());
 
     final result = await teacherRepo.getTeachers(managerId: managerId);

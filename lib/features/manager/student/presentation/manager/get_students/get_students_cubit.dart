@@ -14,7 +14,7 @@ class GetStudentsCubit extends Cubit<GetStudentsState> {
     required this.studentRepo,
   }) : super(GetStudentsInitial());
 
-  Future<void> getStudents({required int managerId}) async {
+  Future<void> getStudents({required String managerId}) async {
     emit(GetStudentsLoading());
 
     final result = await studentRepo.getStudents(

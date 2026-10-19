@@ -7,7 +7,7 @@ class AddTeacherModel {
   final String teacherName;
   final String email;
   final String password;
-  final int managerId;
+  final String managerId;
   final String phone;
   final String? imageUrl;
   final File? image;
@@ -65,7 +65,7 @@ class AddTeacherModel {
     String? teacherName,
     String? email,
     String? password,
-    int? managerId,
+    String? managerId,
     String? phone,
     String? imageUrl,
     File? image,

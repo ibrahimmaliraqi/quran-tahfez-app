@@ -18,7 +18,7 @@ class ManagerTeachersViewBody extends StatelessWidget {
       color: AppColors.primary,
       backgroundColor: Colors.white,
       onRefresh: () => context.read<GetTeachersCubit>().getTeachers(
-        managerId: int.parse(PrefsHelper.getUser()!.id!),
+        managerId: PrefsHelper.getUser()!.id!,
       ),
       child: Column(
         children: [

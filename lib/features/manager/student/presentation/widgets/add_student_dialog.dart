@@ -366,7 +366,7 @@ class _AddStudentDialogState extends State<AddStudentDialog> {
                       AddStudentEntity data = AddStudentEntity(
                         image: selectedimage ?? File(""),
                         password: passwordController.text,
-                        managerId: int.parse(PrefsHelper.getUser()!.id!),
+                        managerId: PrefsHelper.getUser()!.id!,
                         teacherId: selectedTeacherId!,
                         studentName: studentNameController.text,
                         email: emailController.text.trim(),

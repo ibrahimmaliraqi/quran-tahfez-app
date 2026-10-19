@@ -4,11 +4,11 @@ import 'package:quran_tahfez/core/domain/teacher/entities/teacher_entity.dart';
 import 'package:quran_tahfez/core/error/failure.dart';
 
 abstract class TeacherRepo {
-  Future<Either<Failure, TeacherEntity>> addTeacher({
+  Future<Either<Failure, void>> addTeacher({
     required AddTeacherEntity data,
   });
   Future<Either<Failure, List<TeacherEntity>>> getTeachers({
-    required int managerId,
+    required String managerId,
   });
   Future<Either<Failure, String>> deleteTeacher({
     required int teacherId,

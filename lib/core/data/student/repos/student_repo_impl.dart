@@ -39,7 +39,7 @@ class StudentRepoImpl implements StudentRepo {
 
   @override
   Future<Either<Failure, List<StudentEntity>>> getStudents({
-    required int managerId,
+    required String managerId,
   }) async {
     try {
       final res = await studentRemote.getStudents(managerId: managerId);

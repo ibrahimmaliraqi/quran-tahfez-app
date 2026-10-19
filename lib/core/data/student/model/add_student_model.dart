@@ -5,7 +5,7 @@ import 'package:quran_tahfez/core/domain/student/entities/add_student_entity.dar
 
 class AddStudentModel {
   final int? userId;
-  final int managerId;
+  final String managerId;
   final int teacherId;
   final String studentName;
   final String email;
@@ -96,7 +96,7 @@ class AddStudentModel {
 
   AddStudentModel copyWith({
     int? userId,
-    int? managerId,
+    String? managerId,
     int? teacherId,
     String? studentName,
     String? email,

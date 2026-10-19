@@ -12,14 +12,14 @@ class TeacherRepoImpl implements TeacherRepo {
 
   TeacherRepoImpl({required this.teacherRemote});
   @override
-  Future<Either<Failure, TeacherEntity>> addTeacher({
+  Future<Either<Failure, void>> addTeacher({
     required AddTeacherEntity data,
   }) async {
     try {
-      final res = await teacherRemote.addTeacher(
+      await teacherRemote.addTeacher(
         data: AddTeacherModel.fromEntity(data),
       );
-      return right(res.toEntity());
+      return right(null);
     } on AppExceptions catch (e) {
       return left(ServerFailure(message: e.errMessage));
     }
@@ -27,7 +27,7 @@ class TeacherRepoImpl implements TeacherRepo {
 
   @override
   Future<Either<Failure, List<TeacherEntity>>> getTeachers({
-    required int managerId,
+    required String managerId,
   }) async {
     try {
       final res = await teacherRemote.getTeachers(managerId: managerId);
