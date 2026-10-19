@@ -24,7 +24,7 @@ class ManagerTeachersListBloc extends StatelessWidget {
             title: 'حدث خطأ',
             onRetry: () {
               context.read<GetTeachersCubit>().getTeachers(
-                managerId: PrefsHelper.getUser()!.id!,
+                managerId: int.parse(PrefsHelper.getUser()!.id!),
               );
             },
           );
@@ -73,7 +73,7 @@ class TeacherCardBlocListener extends StatelessWidget {
         }
         if (state is DeleteTeacherSuccess) {
           context.read<GetTeachersCubit>().getTeachers(
-            managerId: PrefsHelper.getUser()!.id!,
+            managerId: int.parse(PrefsHelper.getUser()!.id!),
           );
           Snack.show(context, message: state.message);
         }

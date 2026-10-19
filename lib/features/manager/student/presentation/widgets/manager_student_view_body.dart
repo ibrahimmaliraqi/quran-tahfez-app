@@ -24,7 +24,7 @@ class _ManagerStudentViewBodyState extends State<ManagerStudentViewBody> {
       color: AppColors.primary,
       backgroundColor: Colors.white,
       onRefresh: () => context.read<GetStudentsCubit>().getStudents(
-        managerId: PrefsHelper.getUser()!.id!,
+        managerId: int.parse(PrefsHelper.getUser()!.id!),
       ),
       child: Column(
         children: [

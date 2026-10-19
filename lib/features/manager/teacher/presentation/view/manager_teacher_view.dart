@@ -23,7 +23,7 @@ class ManagerTeachersView extends StatelessWidget {
         BlocProvider(
           create: (context) => GetTeachersCubit(
             teacherRepo: getIt.get<TeacherRepo>(),
-          )..getTeachers(managerId: PrefsHelper.getUser()!.id!),
+          )..getTeachers(managerId: int.parse(PrefsHelper.getUser()!.id!)),
         ),
         BlocProvider(
           create: (context) =>

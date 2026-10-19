@@ -18,8 +18,11 @@ GetIt getIt = GetIt.instance;
 void setupLocator() {
   //Services
   getIt.registerSingleton<DioClient>(DioClient());
+  // getIt.registerSingleton<AuthRemote>(
+  //   ApiAuthRemote(dioClient: getIt.get<DioClient>()),
+  // );
   getIt.registerSingleton<AuthRemote>(
-    ApiAuthRemote(dioClient: getIt.get<DioClient>()),
+    SupabaseAuthRemoteImpl(),
   );
   getIt.registerSingleton<TeacherRemote>(
     ApiTeacherRemoteImpl(dioClient: getIt.get<DioClient>()),

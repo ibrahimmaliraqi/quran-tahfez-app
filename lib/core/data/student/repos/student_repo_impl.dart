@@ -27,7 +27,9 @@ class StudentRepoImpl implements StudentRepo {
         createdAt: AppString.currentTime,
       );
       final res2 = await studentRemote.addStudent(
-        data: AddStudentModel.fromEntity(data).copyWith(userId: res.id),
+        data: AddStudentModel.fromEntity(
+          data,
+        ).copyWith(userId: int.parse(res.id!)),
       );
       return right(res2.toEntity());
     } on AppExceptions catch (e) {

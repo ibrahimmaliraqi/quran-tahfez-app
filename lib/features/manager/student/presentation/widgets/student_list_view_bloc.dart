@@ -47,7 +47,7 @@ class StudentsListViewBloc extends StatelessWidget {
             message: state.message,
             onRetry: () {
               context.read<GetStudentsCubit>().getStudents(
-                managerId: PrefsHelper.getUser()!.id!,
+                managerId: int.parse(PrefsHelper.getUser()!.id!),
               );
             },
           );

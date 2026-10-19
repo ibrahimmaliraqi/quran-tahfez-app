@@ -2,7 +2,7 @@ import 'package:quran_tahfez/features/auth/domain/entities/user_entity.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
 class UserModel {
-  int? id;
+  String? id;
   String? name;
   String? email;
   String? role;
@@ -22,7 +22,7 @@ class UserModel {
 
     return UserModel(
       // معرّف جدول المستخدمين إذا كنت تمرره في الـ metadata، وإلا يترك null
-      id: int.parse(user.id),
+      id: user.id,
       name: metadata['name'] as String?,
       email: user.email,
       role: metadata['role'] as String?,
@@ -56,7 +56,7 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['id'] != null ? map['id'] as int : null,
+      id: map['id'] != null ? map['id'] as String : null,
       name: map['name'] != null ? map['name'] as String : null,
       email: map['email'] != null ? map['email'] as String : null,
       role: map['role'] != null ? map['role'] as String : null,
