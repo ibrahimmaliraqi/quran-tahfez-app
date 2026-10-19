@@ -11,7 +11,6 @@ class ManagerProfileView extends StatelessWidget {
   static const Color _muted = Color(0xFF8A978F);
   static const Color _line = Color(0xFFEDF0EC);
   static const Color _gold = Color(0xFFD9B66B);
-  static const Color _goldLight = Color(0xFFF2DDA4);
   static const Color _danger = Color(0xFFC04444);
 
   // استبدل هذه القيم ببيانات المدير المسجل دخوله
