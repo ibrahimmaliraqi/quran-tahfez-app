@@ -1,6 +1,7 @@
 import 'package:quran_tahfez/core/data/teacher/model/add_teacher_model.dart';
 import 'package:quran_tahfez/core/data/teacher/model/teacher_model.dart';
 import 'package:quran_tahfez/core/error/app_exceptions.dart';
+import 'package:quran_tahfez/core/functions/get_supabase_exc.dart';
 import 'package:quran_tahfez/core/network/dio_client.dart';
 import 'package:quran_tahfez/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -101,17 +102,6 @@ class ApiTeacherRemoteImpl implements TeacherRemote {
 }
 
 class SupabaseTeacherRemoteImpl implements TeacherRemote {
-  String getExceptionMessage({required PostgrestException data}) {
-    switch (data.code) {
-      case "PGRST204":
-        return 'تعذر إضافة المعلم.';
-      default:
-        print(data.code);
-        print(data.message);
-        return " ${data.message}حدث خطاااا";
-    }
-  }
-
   @override
   Future<void> addTeacher({required AddTeacherModel data}) async {
     try {

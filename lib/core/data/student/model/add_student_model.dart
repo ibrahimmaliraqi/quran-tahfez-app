@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:quran_tahfez/core/domain/student/entities/add_student_entity.dart';
 
 class AddStudentModel {
-  final int? userId;
+  final String? userId;
   final String managerId;
-  final int teacherId;
+  final String teacherId;
   final String studentName;
   final String email;
   final File image;
@@ -95,9 +95,9 @@ class AddStudentModel {
   }
 
   AddStudentModel copyWith({
-    int? userId,
+    String? userId,
     String? managerId,
-    int? teacherId,
+    String? teacherId,
     String? studentName,
     String? email,
     String? phone,

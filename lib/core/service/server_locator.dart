@@ -30,8 +30,11 @@ void setupLocator() {
   getIt.registerSingleton<TeacherRemote>(
     SupabaseTeacherRemoteImpl(),
   );
+  // getIt.registerSingleton<StudentRemote>(
+  //   ApiStudentRemoteImpl(dioClient: getIt.get<DioClient>()),
+  // );
   getIt.registerSingleton<StudentRemote>(
-    ApiStudentRemoteImpl(dioClient: getIt.get<DioClient>()),
+    SupabaseStudentRemoteImpl(),
   );
   getIt.registerSingleton<StorageRemote>(
     ApiImgbbImpl(dioClient: getIt.get<DioClient>()),

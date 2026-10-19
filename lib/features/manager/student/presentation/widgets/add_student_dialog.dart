@@ -48,7 +48,7 @@ class _AddStudentDialogState extends State<AddStudentDialog> {
 
   final ageController = TextEditingController(text: '14');
   GlobalKey<FormState> vali = GlobalKey();
-  int? selectedTeacherId;
+  String? selectedTeacherId;
   String? selectedTeacherName;
   File? selectedimage;
   @override
@@ -143,7 +143,7 @@ class _AddStudentDialogState extends State<AddStudentDialog> {
                                       );
 
                                       setState(() {
-                                        selectedTeacherId = teacher.id;
+                                        selectedTeacherId = teacher.userId;
                                         selectedTeacherName =
                                             teacher.teacherName;
                                       });

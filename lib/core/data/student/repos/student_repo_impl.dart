@@ -15,7 +15,7 @@ class StudentRepoImpl implements StudentRepo {
 
   StudentRepoImpl({required this.authRemote, required this.studentRemote});
   @override
-  Future<Either<Failure, StudentEntity>> addStudent({
+  Future<Either<Failure, void>> addStudent({
     required AddStudentEntity data,
   }) async {
     try {
@@ -26,12 +26,12 @@ class StudentRepoImpl implements StudentRepo {
         role: "student",
         createdAt: AppString.currentTime,
       );
-      final res2 = await studentRemote.addStudent(
+      await studentRemote.addStudent(
         data: AddStudentModel.fromEntity(
           data,
-        ).copyWith(userId: int.parse(res.id!)),
+        ).copyWith(userId: res.id!),
       );
-      return right(res2.toEntity());
+      return right(null);
     } on AppExceptions catch (e) {
       return left(ServerFailure(message: e.errMessage));
     }

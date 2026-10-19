@@ -35,7 +35,7 @@ class StudentModel {
   });
   factory StudentModel.fromMap(Map<String, dynamic> json) {
     return StudentModel(
-      teacherName: json['teacher_name'],
+      teacherName: json['teacher']?['teachers']?[0]['teacher_name'] as String?,
       id: json['id'] as int,
       managerId: json['manager_id'] as String,
       teacherId: json['teacher_id'] as String,

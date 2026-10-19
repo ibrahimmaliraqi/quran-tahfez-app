@@ -1,9 +1,9 @@
 import 'dart:io';
 
 class AddStudentEntity {
-  final int? userId;
+  final String? userId;
   final String managerId;
-  final int teacherId;
+  final String teacherId;
   final String studentName;
   final String email;
   final String phone;

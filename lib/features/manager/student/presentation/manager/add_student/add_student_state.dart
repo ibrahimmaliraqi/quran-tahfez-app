@@ -7,11 +7,7 @@ final class AddStudentInitial extends AddStudentState {}
 
 final class AddStudentLoading extends AddStudentState {}
 
-final class AddStudentSuccess extends AddStudentState {
-  final StudentEntity student;
-
-  AddStudentSuccess({required this.student});
-}
+final class AddStudentSuccess extends AddStudentState {}
 
 final class AddStudentFailure extends AddStudentState {
   final String errMessage;

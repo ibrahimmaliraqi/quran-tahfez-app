@@ -4,7 +4,7 @@ import 'package:quran_tahfez/core/domain/student/entities/student_entity.dart';
 import 'package:quran_tahfez/core/error/failure.dart';
 
 abstract class StudentRepo {
-  Future<Either<Failure, StudentEntity>> addStudent({
+  Future<Either<Failure, void>> addStudent({
     required AddStudentEntity data,
   });
   Future<Either<Failure, List<StudentEntity>>> getStudents({
